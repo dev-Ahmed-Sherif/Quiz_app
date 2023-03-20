@@ -1,12 +1,14 @@
+
+
 const express = require("express");
 const app = express();
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
 
-import { config } from 'dotenv';
+const con =  require("./database/conn")
 
-config()
+app.use(cors({origin:process.env.CLIENT_URL, credentials:true}))
 
-app.listen(3030,()=>{
-    console.log('server on 3030')
+app.listen(process.env.PORT || 7000,()=>{
+    console.log('server on',process.env.PORT)
 })
