@@ -33,6 +33,8 @@ export default function Questions({ onChecked }) {
 
   return (
     <div className='questions'>
+        
+        {/* ? this for access the value when it not null or undefined */}
         <h2 className='text-light'>{questions?.question}</h2>
 
         <ul key={questions?.id}>

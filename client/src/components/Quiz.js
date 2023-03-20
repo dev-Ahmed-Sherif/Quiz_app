@@ -24,6 +24,7 @@ export default function Quiz() {
 
             /** insert a new result in the array.  */
             if(result.length <= trace){
+                /* Access value of selected answer */ 
                 dispatch(PushAnswer(check))
             }
         }

@@ -15,6 +15,7 @@ export const resultReducer = createSlice({
         },
         updateResultAction : (state, action) => {
             const { trace, checked } = action.payload;
+            /* Update the value of previous question */ 
             state.result.fill(checked, trace, trace + 1)
         },
         resetResultAction : () => {
