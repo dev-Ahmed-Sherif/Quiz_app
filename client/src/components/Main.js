@@ -29,8 +29,9 @@ export default function Main() {
             <li>The result will be declared at the end of the quiz.</li>
         </ol>
 
-        <form id="form">
-            <input ref={inputRef} className="userid" type="text" placeholder='Username*' />
+        <form id="form" className='form-grid'>
+            <input ref={inputRef} className="userid" type="text" placeholder='Username' />
+            <input ref={inputRef} className="userid" type="text" placeholder='Password' />
         </form>
 
         <div className='start'>
