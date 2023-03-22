@@ -14,7 +14,6 @@ const questionSchema = new mongoose.Schema(
             type:Array,
             require:true
         },
-        subjects:[{type:mongoose.Types.ObjectId, ref:"subjects"}],
         dateAdded: {
             type:String
         }

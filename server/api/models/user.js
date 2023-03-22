@@ -14,6 +14,9 @@ const userSchema = new mongoose.Schema(
             type:String,
             require:true
         },
+        result: {
+            type:Array,
+        },
         dateRegister: {
             type:String
         }

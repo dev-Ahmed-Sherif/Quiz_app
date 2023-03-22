@@ -16,10 +16,13 @@ body, html{
 }
 
 .container{
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: relative;
   margin: 40px auto;
-  height: auto;
+  height: 100vh;
   width: 800px;
   padding: 20px;
 }
