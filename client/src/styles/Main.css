@@ -3,6 +3,13 @@
     color: #cecece;
 }
 
+.container img {
+    display: block;
+    width: 21rem;
+    height: 9rem;
+    border-radius: 4%;
+}
+
 .start{
     display: flex;
     justify-content: center;
