@@ -32,7 +32,7 @@ export default function Main() {
 
         <form id="form" className='form-grid'>
             <input ref={inputRef} className="userid" type="text" placeholder='Username' />
-            <input ref={inputRef} className="userid" type="text" placeholder='Password' />
+            {/* <input ref={inputRef} className="userid" type="text" placeholder='Password' /> */}
         </form>
 
         <div className='start'>
