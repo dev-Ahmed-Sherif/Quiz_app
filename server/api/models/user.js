@@ -17,7 +17,6 @@ const userSchema = new mongoose.Schema(
         academicYearId:{
             type:mongoose.Types.ObjectId,
             ref:"academicyears",
-            require:true 
         },
         result: {
             type:Array,
