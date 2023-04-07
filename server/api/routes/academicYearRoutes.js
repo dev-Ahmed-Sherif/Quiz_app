@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const Ques = require("../models/question");
+const academicYear = require("../models/academicYear");
 
 router.get("/", (req, res) => {
-  Ques.find((err, data) => {
+  academicYear.find((err, data) => {
     if (err) {
       res.send({ message: "No Data" });
     }
@@ -12,14 +12,14 @@ router.get("/", (req, res) => {
 });
 
 router.post("/create", (req, res) => {
-  const ques = new Ques({
+  const Year = new academicYear({
     name: req.name,
     dateAdded: new Date(),
   });
 
-  Subject.save().then((result) => {
+  Year.save().then((result) => {
     console.log(result);
-    res.send("New Subject created");
+    res.send("New Year created");
   });
 });
 

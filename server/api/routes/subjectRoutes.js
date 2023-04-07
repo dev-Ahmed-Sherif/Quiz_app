@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const Ques = require("../models/question");
+const Subject = require("../models/subject");
 
 router.get("/", (req, res) => {
-  Ques.find((err, data) => {
+  Subject.find((err, data) => {
     if (err) {
       res.send({ message: "No Data" });
     }
@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/create", (req, res) => {
-  const ques = new Ques({
+  const subject = new Subject({
     name: req.name,
     dateAdded: new Date(),
   });
