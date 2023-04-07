@@ -5,18 +5,22 @@ const quizSchema = new mongoose.Schema(
         academicYearId:{
             type:mongoose.Types.ObjectId,
             ref:"academicyears",
-            require:true 
+            required:true 
         },
         subjectId:{
             type:mongoose.Types.ObjectId,
             ref:"subjects",
-            require:true 
+            required:true 
         },
         questionIds:[{
             type:mongoose.Types.ObjectId,
             ref:"questions",
-            require:true
         }],
+        type:{
+            type:String,
+            required:true 
+        }
+        ,
         dateAdded: {
             type:String
         }
