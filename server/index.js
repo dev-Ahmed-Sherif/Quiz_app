@@ -22,6 +22,10 @@ app.use("/api/quizzes", quizRouter);
 app.use("/api/subjects", subjectRouter);
 app.use("/api/users", userRouter);
 
+app.get("/", (req, res) => {
+  res.send("Hello to System");
+});
+
 app.listen(process.env.PORT || 7000, () => {
   console.log("server on", process.env.PORT);
 });
