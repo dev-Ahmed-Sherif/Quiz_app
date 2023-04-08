@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       default: "student",
-      require: true,
+      required: true,
     },
     academicYearId: {
       type: mongoose.Types.ObjectId,
