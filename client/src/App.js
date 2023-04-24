@@ -1,4 +1,4 @@
-import "../styles/App.css";
+import "./styles/App.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -6,11 +6,12 @@ import { CheckUserExist } from "./helper/helper";
 
 /** import components */
 import Main from "./pages/Main";
-import Quiz from "./Quiz";
-import Result from "./Result";
-import Dasboard from "./pages/Dasboard";
+import Quiz from "./pages/Quiz";
+import Result from "./pages/Result";
+import Dashboard from "./pages/Dashboard";
 import Users from "./pages/Users";
 import QuizzesDashboard from "./pages/QuizzesDashboard";
+import { useEffect } from "react";
 
 /** react routes */
 const router = createBrowserRouter([
@@ -19,27 +20,31 @@ const router = createBrowserRouter([
     element: <Main></Main>,
   },
   {
-    path: "/",
+    path: "/dashboard",
     element: (
-      <CheckUserExist>
-        <Dasboard></Dasboard>
-      </CheckUserExist>
+      <>
+        {/* <CheckUserExist>
+           <Dashboard />
+        </CheckUserExist> */}
+      </>
     ),
   },
   {
     path: "/users-dashboard",
     element: (
-      <CheckUserExist>
-        <Users></Users>
-      </CheckUserExist>
+      <Users />
+      // <CheckUserExist>
+      //   <Users />
+      // </CheckUserExist>
     ),
   },
   {
     path: "/quizzes-dashboard",
     element: (
-      <CheckUserExist>
-        <QuizzesDashboard></QuizzesDashboard>
-      </CheckUserExist>
+      <QuizzesDashboard />
+      // <CheckUserExist>
+      //   <QuizzesDashboard />
+      // </CheckUserExist>
     ),
   },
   {
@@ -61,6 +66,17 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  // Try to prevent refresh button
+
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", (e) => {
+  //     e.preventDefault();
+  //     console.log("loaded");
+  //     console.log(e);
+  //     // e.returnValue = "hello";
+  //     return true;
+  //   });
+  // });
   return (
     <>
       <RouterProvider router={router} />

@@ -1,0 +1,273 @@
+.container {
+  position: relative;
+  width: 100%;
+}
+
+.navigation {
+  position: fixed;
+  width: 200px;
+  height: 100%;
+  background: var(--blue);
+  border-left: 10px solid var(--blue);
+  overflow: hidden;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+
+.navigation.active {
+  width: 75px;
+}
+
+.navigation ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.navigation ul li {
+  margin-bottom: 0.1rem;
+  position: relative;
+  width: 100%;
+  border: none;
+  list-style: none;
+  height: inherit;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+/* .navigation ul li:hover,
+.navigation ul li.hovered {
+  background-color: var(--white);
+} */
+
+.navigation ul li:nth-child(1) {
+  margin-bottom: 40px;
+  pointer-events: none;
+}
+
+.navigation ul li:nth-child(1) a {
+  display: flex;
+  justify-content: center;
+}
+
+.navigation ul li.active {
+  background-color: var(--white);
+}
+
+.navigation ul li a {
+  position: relative;
+  display: block;
+  width: 100%;
+  display: flex;
+  text-decoration: none;
+  color: var(--white);
+}
+
+/* .navigation ul li:hover a,
+.navigation ul li.hovered a {
+  color: var(--blue);
+} */
+
+.navigation ul li.active a {
+  color: var(--blue);
+}
+
+.navigation ul li a .icon {
+  position: relative;
+  display: block;
+  min-width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navigation ul li a .icon {
+  font-size: 1.5em;
+}
+
+.navigation ul li a .title {
+  padding: 5px;
+  position: relative;
+  display: block;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Curve Outside */
+
+/* .navigation ul li:hover a::before,
+.navigation ul li.hovered a::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  box-shadow: 35px 35px 0 10px var(--white);
+  /* box-shadow: 35px 35px 0 10px red; 
+  pointer-events: none;
+} */
+
+.navigation ul li.active a::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  box-shadow: 35px 35px 0 10px var(--white);
+  /* box-shadow: 35px 35px 0 10px red; */
+  pointer-events: none;
+}
+
+/* .navigation ul li:hover a::after,
+.navigation ul li.hovered a::after {
+  content: "";
+  position: absolute;
+  bottom: -50px;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  box-shadow: 35px -35px 0 10px var(--white);
+  /* box-shadow: 35px -35px 0 10px red; 
+  pointer-events: none;
+} */
+
+.navigation ul li.active a::after {
+  content: "";
+  position: absolute;
+  bottom: -50px;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  box-shadow: 35px -35px 0 10px var(--white);
+  /* box-shadow: 35px -35px 0 10px red; */
+  pointer-events: none;
+}
+
+.main {
+  position: absolute;
+  width: calc(100% - 200px);
+  left: 200px;
+  min-height: 100vh;
+  background: var(--white);
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+
+.main.active {
+  width: calc(100% - 75px);
+  left: 75px;
+}
+
+.topbar {
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.toggle {
+  position: relative;
+  top: 0;
+  width: 60px;
+  height: 60px;
+  background: #ccc;
+  font-size: 2em;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search {
+  position: relative;
+  width: 400px;
+  margin: 0 10px;
+}
+
+.search label {
+  position: relative;
+  width: 100%;
+}
+
+.search input {
+  width: 100%;
+  height: 40px;
+  padding: 5px 20px 5px 40px;
+  font-size: 1.1em;
+  outline: none;
+  border: 1px solid var(--black2);
+  border-radius: 40px;
+  -webkit-border-radius: 40px;
+  -moz-border-radius: 40px;
+  -ms-border-radius: 40px;
+  -o-border-radius: 40px;
+}
+
+.search label ion-icon {
+  position: absolute;
+  top: 3px;
+  left: 10px;
+  font-size: 1.1em;
+}
+
+.user {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+
+.user img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  /* object-fit: cover; */
+}

@@ -15,6 +15,16 @@ export default function Quiz() {
   const { queue, trace } = useSelector((state) => state.questions);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    function preback() {
+      window.history.forward();
+    }
+    setTimeout(preback(), 0);
+    window.onunload = function () {
+      return null;
+    };
+  });
+
   /** next button event handler */
   function onNext() {
     if (trace < queue.length) {

@@ -79,7 +79,7 @@ export default function Result() {
 
       <div className="start">
         <Link className="btn" to={"/"} onClick={onRestart}>
-          Restart
+          الذهاب الى صفحة البداية
         </Link>
       </div>
 
