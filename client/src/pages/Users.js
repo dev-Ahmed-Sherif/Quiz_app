@@ -40,7 +40,10 @@ const columns = [
           <Link to={"/user-dashboard/" + params.row.id}>
             <button className="edit"> Edit </button>
           </Link>
-          <DeleteIcon />
+          <DeleteIcon
+            className="delete"
+            onClick={() => handleDelete(params.row.id)}
+          />
         </>
       );
     },
@@ -77,6 +80,8 @@ const rows = [
   { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
 ];
 
+const handleDelete = (id) => {};
+
 function Users() {
   useEffect(() => {
     function preback() {
@@ -87,6 +92,7 @@ function Users() {
       return null;
     };
   });
+
   return (
     <>
       <Sidebar />
