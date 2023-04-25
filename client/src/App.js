@@ -1,5 +1,7 @@
 import "./styles/App.css";
 
+import { useEffect } from "react";
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { CheckUserExist } from "./helper/helper";
@@ -11,7 +13,8 @@ import Result from "./pages/Result";
 import Dashboard from "./pages/Dashboard";
 import Users from "./pages/Users";
 import QuizzesDashboard from "./pages/QuizzesDashboard";
-import { useEffect } from "react";
+import AcademicSubject from "./pages/AcademicSubject";
+import AcademicYear from "./pages/AcademicYear";
 
 /** react routes */
 const router = createBrowserRouter([
@@ -42,6 +45,24 @@ const router = createBrowserRouter([
     path: "/quizzes-dashboard",
     element: (
       <QuizzesDashboard />
+      // <CheckUserExist>
+      //   <QuizzesDashboard />
+      // </CheckUserExist>
+    ),
+  },
+  {
+    path: "/academic-subjects",
+    element: (
+      <AcademicSubject />
+      // <CheckUserExist>
+      //   <QuizzesDashboard />
+      // </CheckUserExist>
+    ),
+  },
+  {
+    path: "/academic-years",
+    element: (
+      <AcademicYear />
       // <CheckUserExist>
       //   <QuizzesDashboard />
       // </CheckUserExist>

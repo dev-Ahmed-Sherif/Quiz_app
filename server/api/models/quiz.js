@@ -22,6 +22,9 @@ const quizSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    dateUpdated: {
+      type: String,
+    },
     dateAdded: {
       type: String,
     },

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { BsFillPersonFill } from "react-icons/bs";
+import { BsFillPersonFill, BsCalendarDate } from "react-icons/bs";
 import { SiTestcafe } from "react-icons/si";
 import { MdPlayLesson } from "react-icons/md";
 
@@ -72,6 +72,17 @@ function Sidebar() {
               <MdPlayLesson />
             </span>
             <span className="title"> المواد الدراسية </span>
+          </Link>
+        </li>
+        <li
+          className={selectedLink === "العام الدراسى" ? "active" : ""}
+          onClick={() => handleLinkClick("العام الدراسى")}
+        >
+          <Link to="/academic-years">
+            <span className="icon">
+              <BsCalendarDate />
+            </span>
+            <span className="title"> العام الدراسى </span>
           </Link>
         </li>
       </ul>
