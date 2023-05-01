@@ -10,10 +10,11 @@ export default function DataTable({ columns, rows }) {
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 7,
+              pageSize: 5,
             },
           },
         }}
+        pageSizeOptions={[5, 10]}
         checkboxSelection
       />
     </div>

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import { BsFillPersonFill, BsCalendarDate } from "react-icons/bs";
 import { SiTestcafe } from "react-icons/si";
 import { MdPlayLesson } from "react-icons/md";
+
+import DropDownItem from "./DropDownItem";
 
 import { useSelector, useDispatch } from "react-redux";
 import * as Action from "../redux/link_reducer";
@@ -23,68 +24,51 @@ function Sidebar() {
   return (
     <div className="navigation">
       <ul>
-        <li>
-          <Link to="/users-dashboard">
-            <span className="icon">
-              {/* <ion-icon name="wifi-outline"></ion-icon> */}
-            </span>
-            {/* <span className="title"> أختبارات </span> */}
-          </Link>
-        </li>
-        {/* <li
-          className={selectedLink === "الرئيسية" ? "active" : ""}
-          onClick={() => handleLinkClick("الرئيسية")}
-        >
-          <Link to="/">
-            <spn class="icon"></spn>
-            <span class="title"> الرئيسية </span>
-          </Link>
-          الرئيسية
-        </li> */}
-        <li
-          className={selectedLink === "الطلاب" ? "active" : ""}
-          onClick={() => handleLinkClick("الطلاب")}
-        >
-          <Link to="/users-dashboard">
-            <span className="icon">
-              <BsFillPersonFill />
-            </span>
-            <span className="title"> الطلاب </span>
-          </Link>
-        </li>
-        <li
-          className={selectedLink === "الأختبارات" ? "active" : ""}
-          onClick={() => handleLinkClick("الأختبارات")}
-        >
-          <Link to="/quizzes-dashboard">
-            <span className="icon">
-              <SiTestcafe />
-            </span>
-            <span className="title"> الأختبارات </span>
-          </Link>
-        </li>
-        <li
-          className={selectedLink === "المواد الدراسية" ? "active" : ""}
-          onClick={() => handleLinkClick("المواد الدراسية")}
-        >
-          <Link to="/academic-subjects">
-            <span className="icon">
-              <MdPlayLesson />
-            </span>
-            <span className="title"> المواد الدراسية </span>
-          </Link>
-        </li>
-        <li
-          className={selectedLink === "العام الدراسى" ? "active" : ""}
-          onClick={() => handleLinkClick("العام الدراسى")}
-        >
-          <Link to="/academic-years">
-            <span className="icon">
-              <BsCalendarDate />
-            </span>
-            <span className="title"> العام الدراسى </span>
-          </Link>
-        </li>
+        <DropDownItem
+          position="sidebar"
+          selectedLink={selectedLink}
+          linkText=" "
+        />
+        {/* <DropDownItem
+          position="sidebar"
+          selectedLink={selectedLink}
+          linkText="الرئيسية"
+          handleLinkClick={() => handleLinkClick("الرئيسية")}
+          to="/main-dashboard"
+          icon={<BsFillPersonFill />}
+        /> */}
+        <DropDownItem
+          position="sidebar"
+          selectedLink={selectedLink}
+          linkText="الطلاب"
+          handleLinkClick={() => handleLinkClick("الطلاب")}
+          to="/users-dashboard"
+          icon={<BsFillPersonFill />}
+        />
+        <DropDownItem
+          position="sidebar"
+          selectedLink={selectedLink}
+          linkText="الأختبارات"
+          handleLinkClick={() => handleLinkClick("الأختبارات")}
+          to="/quizzes-dashboard"
+          icon={<SiTestcafe />}
+        />
+        <DropDownItem
+          position="sidebar"
+          selectedLink={selectedLink}
+          linkText="المواد الدراسية"
+          handleLinkClick={() => handleLinkClick("المواد الدراسية")}
+          to="/academic-subjects"
+          icon={<MdPlayLesson />}
+        />
+        <DropDownItem
+          position="sidebar"
+          selectedLink={selectedLink}
+          linkText="العام الدراسى"
+          handleLinkClick={() => handleLinkClick("العام الدراسى")}
+          to="/academic-years"
+          icon={<BsCalendarDate />}
+        />
       </ul>
     </div>
   );
