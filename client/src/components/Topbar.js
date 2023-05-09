@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import DropDownItem from "./DropDownItem";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 function Topbar() {
   const [open, setOpen] = useState(false);
@@ -10,7 +11,7 @@ function Topbar() {
     let handler = (e) => {
       if (!menuRef.current.contains(e.target)) {
         setOpen(false);
-        console.log(menuRef.current);
+        // console.log(menuRef.current);
       }
     };
 
@@ -53,14 +54,14 @@ function Topbar() {
             <span>Website Designer</span>
           </h3>
           <ul>
-            {/* <DropDownItem position="topbar" img = {user} text = {"My Profile"}/>
-            <DropDownItem position="topbar" img = {edit} text = {"Edit Profile"}/> */}
+            <DropDownItem position="topbar" text={"My Profile"} />
+            <DropDownItem position="topbar" text={"Edit Profile"} />
           </ul>
         </div>
       </div>
-      <div className="user">
+      {/* <div className="user">
         <img src="./person.JPG" alt="" />
-      </div>
+      </div> */}
     </div>
   );
 }

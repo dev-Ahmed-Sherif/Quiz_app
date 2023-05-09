@@ -30,7 +30,7 @@ router.get("/", requireAuth, (req, res) => {
 
 router.post("/login", async (req, res) => {
   console.log(req.body);
-  const user = await User.findOne({ email: req.body.name });
+  const user = await User.findOne({ name: req.body.name });
   if (user) {
     if (req.body.password == user.password) {
       // console.log(passConfirm);
@@ -42,7 +42,7 @@ router.post("/login", async (req, res) => {
         path: "/",
         maxAge: maxAge * 1000,
       });
-      res.status(200).send({ data: user, token: token });
+      res.status(200).send({ user, token: token });
     } else {
       res.status(400).send({ message: "الباسورد غير صحيح" });
     }
@@ -51,10 +51,11 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/create", requireAuth, (req, res) => {
+router.post("/create", requireAuth, (req, res) => {
   const user = new User({
     name: req.body.name,
     password: req.body.password,
+    role: req.body.role,
     dateRegister: new Date(),
   });
   user.save().then((data) => {
@@ -62,6 +63,19 @@ router.get("/create", requireAuth, (req, res) => {
     res
       .sendStatus(200)
       .send({ message: "تم اضافة مستخدم جديد بنجاح", data: data });
+  });
+});
+
+router.post("/create-test", (req, res) => {
+  const user = new User({
+    name: req.body.name,
+    password: req.body.password,
+    role: req.body.role,
+    dateRegister: new Date(),
+  });
+  user.save().then((data) => {
+    console.log(data);
+    res.status(200).send({ message: "تم اضافة مستخدم جديد بنجاح", data: data });
   });
 });
 

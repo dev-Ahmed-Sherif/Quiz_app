@@ -3,13 +3,22 @@ const router = express.Router();
 const Ques = require("../models/question");
 const { requireAuth } = require("../middleware/authMiddleware");
 
-router.get("/", requireAuth, (req, res) => {
-  Ques.find((err, data) => {
-    if (err) {
-      res.send({ message: "لا يوجد بيانات" });
-    }
-    res.sendStatus(200).send({ data: data });
-  });
+// router.get("/", requireAuth, (req, res) => {
+//   Ques.find((err, data) => {
+//     if (err) {
+//       res.send({ message: "لا يوجد بيانات" });
+//     }
+//     res.sendStatus(200).send({ data: data });
+//   });
+// });
+
+router.get("/", async (req, res) => {
+  try {
+    // console.log("loged");
+    const questions = await Ques.find({});
+    console.log(questions);
+    res.status(200).send({ data: questions });
+  } catch (error) {}
 });
 
 router.post("/create", requireAuth, (req, res) => {

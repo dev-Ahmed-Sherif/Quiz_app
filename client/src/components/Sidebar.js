@@ -14,7 +14,7 @@ function Sidebar() {
   const selectedLink = useSelector((state) => state.link.link);
   const dispatch = useDispatch();
 
-  console.log(selectedLink);
+  // console.log(selectedLink);
 
   const handleLinkClick = (link) => {
     dispatch(Action.setLink(link));
