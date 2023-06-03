@@ -28,6 +28,7 @@ export default function Main() {
     username: "",
     password: "",
   });
+  const [errorMsg, setErrorMsg] = useState(undefined);
   const dispatch = useDispatch();
 
   const inputs = [
@@ -36,7 +37,7 @@ export default function Main() {
       name: "username",
       type: "text",
       placeholder: "الأسم",
-      pattern: `^[A-Za-z]{3,20}$`,
+      pattern: `^[A-Za-z0-9\\s]{3,20}$`,
       errorMsg: "الأسم يجب الإ يقل عن أربعه احرف ولا يحتوى على رموز",
       required: true,
     },
@@ -44,7 +45,7 @@ export default function Main() {
       id: "2",
       name: "password",
       type: "password",
-      placeholder: "الباسورد",
+      placeholder: "كلمة المرور",
       pattern: `^[A-Za-z0-9]{3,20}$`,
       errorMsg: "الباسورد لابد ان يحتوى على حرف واحد ورقم واحد على الأقل",
       required: true,
@@ -67,7 +68,13 @@ export default function Main() {
         }
       );
       console.log(res);
+
+      // Check res Message
+      setErrorMsg(res.data.message);
+
+      // Check User Role
       const role = res.data.user.role;
+
       console.log(role);
       if (role === "admin") {
         dispatch(setUser(values));
@@ -96,8 +103,9 @@ export default function Main() {
 
   return (
     <div className="container">
-      <h1> إختبارات </h1>
       <img src="./logo.jpeg" alt="" />
+      <h1 style={{ color: "#5a8eff" }}> إختبارات </h1>
+      <img src="./exams.png" alt="" />
       {/* <h1 className='title text-light'>Quiz Application</h1>
 
         <ol>
@@ -120,6 +128,8 @@ export default function Main() {
         ))}
         <button className="btn">تسجيل الدخول</button>
       </form>
+
+      {errorMsg !== undefined ? <p> {errorMsg} </p> : <p></p>}
       {/* <div className="start">
         <Link className="btn" to={"/quiz"} onClick={startQuiz}>
           تسجيل الدخول

@@ -7,11 +7,21 @@
   color: #cecece;
 }
 
-.container img {
+.container img:first-child {
   display: block;
   width: 21rem;
   height: 9rem;
   border-radius: 4%;
+}
+
+.container img:last-of-type {
+  width: 11rem;
+  height: 11rem;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
 }
 
 .start {
@@ -21,16 +31,21 @@
 }
 
 .start .btn {
-  padding: 0.2em 1.7em;
+  padding: 0.5em 1em;
   border: none;
-  border-radius: 0.1em;
+  border-radius: 0.8em;
   font-size: 1.2em;
   color: #202020;
   text-decoration: none;
-  background-color: #faff5a;
+  background-color: #5a8eff;
+  -webkit-border-radius: 0.8em;
+  -moz-border-radius: 0.8em;
+  -ms-border-radius: 0.8em;
+  -o-border-radius: 0.8em;
 }
 
 #form {
+  direction: rtl;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,4 +63,10 @@
   -moz-border-radius: 0.5rem;
   -ms-border-radius: 0.5rem;
   -o-border-radius: 0.5rem;
+}
+
+.container p {
+  padding: 1.4rem;
+  font-size: x-large;
+  color: red;
 }

@@ -44,10 +44,10 @@ router.post("/login", async (req, res) => {
       });
       res.status(200).send({ user, token: token });
     } else {
-      res.status(400).send({ message: "الباسورد غير صحيح" });
+      res.send({ message: "الباسورد غير صحيح" });
     }
   } else {
-    res.status(400).send({ message: "ليس لديك حساب" });
+    res.send({ message: "ليس لديك حساب لدينا" });
   }
 });
 

@@ -235,6 +235,7 @@
 }
 
 .search input {
+  direction: rtl;
   width: 100%;
   height: 40px;
   padding: 5px 20px 5px 40px;
@@ -278,6 +279,9 @@
 }
 
 .main .content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   padding: 7rem 2rem 2rem 2rem;
 }
 
@@ -385,4 +389,18 @@ h3 span {
   max-width: 100px;
   margin-left: 10px;
   transition: var(--speed);
+}
+
+.css-204u17-MuiDataGrid-main {
+  direction: rtl;
+}
+
+.css-78c6dr-MuiToolbar-root-MuiTablePagination-toolbar {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.css-78c6dr-MuiToolbar-root-MuiTablePagination-toolbar p,
+.css-rtrcn9-MuiTablePagination-root {
+  font-size: large !important;
 }
