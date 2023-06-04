@@ -11,7 +11,7 @@ import DataTable from "./../components/DataTable";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 70 },
+  { field: "id", headerName: "الرقم", width: 70 },
   { field: "name", headerName: "الأسم", width: 130 },
   {
     field: "action",

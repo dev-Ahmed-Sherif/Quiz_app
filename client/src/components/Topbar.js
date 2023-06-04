@@ -51,7 +51,6 @@ function Topbar() {
           <h3>
             Admin
             <br />
-            <span>Website Designer</span>
           </h3>
           <ul>
             <DropDownItem position="topbar" text={"My Profile"} />

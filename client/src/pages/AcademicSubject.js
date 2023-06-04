@@ -7,8 +7,8 @@ import SearchCom from "./../components/SearchCom";
 import DataTable from "./../components/DataTable";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 70 },
-  { field: "subject", headerName: "المادة", width: 130 },
+  { field: "id", headerName: "الرقم", width: 70 },
+  { field: "subject", headerName: "الماة الدراسية", width: 130 },
 ];
 
 const rows = [

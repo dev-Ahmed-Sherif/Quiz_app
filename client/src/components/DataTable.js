@@ -13,7 +13,7 @@ export default function DataTable({ columns, rows }) {
     });
   }, []);
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ height: 370, width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={columns}
