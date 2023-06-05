@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import "../styles/Dashboard.css";
 
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
-import SearchCom from "./../components/SearchCom";
+import SearchItem from "./../components/SearchItem";
 import DataTable from "./../components/DataTable";
 
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
@@ -49,6 +49,7 @@ const rows = [
 const handleDelete = (id) => {};
 
 function Users() {
+  const [search, setSearch] = useState("");
   useEffect(() => {
     function preback() {
       window.history.forward();
@@ -74,7 +75,7 @@ function Users() {
       <div className="main">
         <Topbar />
         <div className="content">
-          <SearchCom />
+          <SearchItem />
           <DataTable columns={columns} rows={rows} />
         </div>
       </div>

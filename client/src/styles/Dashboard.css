@@ -198,7 +198,7 @@
 }
 
 .topbar {
-  background-color: #ccc;
+  background-color: var(--blue);
   z-index: 101;
   top: 0;
   position: sticky;
@@ -208,7 +208,7 @@
   justify-content: flex-start;
   align-items: center;
   padding: 0 10px;
-  box-shadow: 1px 12px 15px 1px gray;
+  box-shadow: 0px 21px 14px 2px rgb(36, 36, 247);
 }
 
 .toggle {
@@ -227,7 +227,6 @@
 .search {
   position: relative;
   width: 270px;
-  margin: 0 10px;
 }
 
 .search label {
@@ -390,6 +389,20 @@ h3 span {
   max-width: 100px;
   margin-left: 10px;
   transition: var(--speed);
+}
+
+.operations {
+  padding: 4rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+}
+
+.add-item {
+  display: flex;
 }
 
 .css-204u17-MuiDataGrid-main {

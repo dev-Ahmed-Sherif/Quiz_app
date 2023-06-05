@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import DropDownItem from "./DropDownItem";
+import { useSelector } from "react-redux";
+import ListItem from "./ListItem";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 function Topbar() {
   const [open, setOpen] = useState(false);
 
   let menuRef = useRef();
+
+  const name = useSelector((state) => state.result.userName);
 
   useEffect(() => {
     let handler = (e) => {
@@ -44,17 +47,17 @@ function Topbar() {
             setOpen(!open);
           }}
         >
-          <img src="./person.JPG" alt="" />
+          <img src="./person.png" alt="" />
         </div>
 
         <div className={`dropdown-menu ${open ? "active" : "inactive"}`}>
           <h3>
-            Admin
+            {name}
             <br />
           </h3>
           <ul>
-            <DropDownItem position="topbar" text={"My Profile"} />
-            <DropDownItem position="topbar" text={"Edit Profile"} />
+            <ListItem position="topbar" text={"My Profile"} />
+            <ListItem position="topbar" text={"Edit Profile"} />
           </ul>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React from "react";
 
-function SearchCom({ search, setSearch }) {
+function SearchItem({ search, setSearch }) {
   return (
     <form className="search" onSubmit={(e) => e.preventDefault()}>
       <input
@@ -15,4 +15,4 @@ function SearchCom({ search, setSearch }) {
   );
 }
 
-export default SearchCom;
+export default SearchItem;

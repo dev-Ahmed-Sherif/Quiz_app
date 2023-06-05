@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function DropDownItem({
+function ListItem({
   position,
   selectedLink,
   handleLinkClick,
@@ -27,4 +27,4 @@ function DropDownItem({
   }
 }
 
-export default DropDownItem;
+export default ListItem;

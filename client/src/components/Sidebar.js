@@ -3,7 +3,7 @@ import { BsFillPersonFill, BsCalendarDate } from "react-icons/bs";
 import { SiTestcafe } from "react-icons/si";
 import { MdPlayLesson } from "react-icons/md";
 
-import DropDownItem from "./DropDownItem";
+import ListItem from "./ListItem";
 
 import { useSelector, useDispatch } from "react-redux";
 import * as Action from "../redux/link_reducer";
@@ -24,12 +24,8 @@ function Sidebar() {
   return (
     <div className="navigation">
       <ul>
-        <DropDownItem
-          position="sidebar"
-          selectedLink={selectedLink}
-          linkText=" "
-        />
-        {/* <DropDownItem
+        <ListItem position="sidebar" selectedLink={selectedLink} linkText=" " />
+        {/* <ListItem
           position="sidebar"
           selectedLink={selectedLink}
           linkText="الرئيسية"
@@ -37,7 +33,7 @@ function Sidebar() {
           to="/main-dashboard"
           icon={<BsFillPersonFill />}
         /> */}
-        <DropDownItem
+        <ListItem
           position="sidebar"
           selectedLink={selectedLink}
           linkText="الطلاب"
@@ -45,7 +41,7 @@ function Sidebar() {
           to="/users-dashboard"
           icon={<BsFillPersonFill />}
         />
-        <DropDownItem
+        <ListItem
           position="sidebar"
           selectedLink={selectedLink}
           linkText="الأختبارات"
@@ -53,7 +49,7 @@ function Sidebar() {
           to="/quizzes-dashboard"
           icon={<SiTestcafe />}
         />
-        <DropDownItem
+        <ListItem
           position="sidebar"
           selectedLink={selectedLink}
           linkText="المواد الدراسية"
@@ -61,7 +57,7 @@ function Sidebar() {
           to="/academic-subjects"
           icon={<MdPlayLesson />}
         />
-        <DropDownItem
+        <ListItem
           position="sidebar"
           selectedLink={selectedLink}
           linkText="العام الدراسى"

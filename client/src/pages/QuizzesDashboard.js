@@ -1,17 +1,18 @@
 import "../styles/Dashboard.css";
 
-import React from "react";
+import React, { useState } from "react";
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
-import SearchCom from "./../components/SearchCom";
+import SearchItem from "./../components/SearchItem";
 
 function QuizzesDashboard() {
+  const [search, setSearch] = useState("");
   return (
     <>
       <Sidebar />
       <div className="main">
         <Topbar />
-        <SearchCom />
+        <SearchItem />
       </div>
     </>
   );
