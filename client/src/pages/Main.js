@@ -1,10 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import FormInput from "../components/FormInput";
 import axios from "axios";
 import { setUser } from "../redux/result_reducer";
 import "../styles/Main.css";
-import FormInput from "../components/FormInput";
 
 export default function Main() {
   // Prevent Browser Back Button

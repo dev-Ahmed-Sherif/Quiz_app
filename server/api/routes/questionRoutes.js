@@ -29,7 +29,7 @@ router.post("/create", requireAuth, (req, res) => {
 
   ques.save().then((data) => {
     console.log(data);
-    res.send("تم إضافة السؤال بنجاح");
+    res.status(200).send("تم إضافة السؤال بنجاح");
   });
 });
 
@@ -42,7 +42,7 @@ router.delete("/delete", requireAuth, (req, res) => {
       res.send({ message: "لم يتم حذف السؤال" });
     } else {
       console.log(data);
-      res.sendStatus(200).send({ message: "تم حذف السؤال بنجاح" });
+      res.status(200).send({ message: "تم حذف السؤال بنجاح" });
     }
   });
 });

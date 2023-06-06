@@ -226,7 +226,7 @@
 
 .search {
   position: relative;
-  width: 270px;
+  /* width: inherit; */
 }
 
 .search label {
@@ -392,10 +392,10 @@ h3 span {
 }
 
 .operations {
-  padding: 4rem;
+  padding: 21px;
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 14px;
@@ -403,6 +403,46 @@ h3 span {
 
 .add-item {
   display: flex;
+  border: 2px solid blue;
+  padding: 7px 40px;
+  border-radius: 14px;
+  -webkit-border-radius: 14px;
+  -moz-border-radius: 14px;
+  -ms-border-radius: 14px;
+  -o-border-radius: 14px;
+}
+
+.addForm {
+  direction: rtl;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.addForm input {
+  direction: rtl;
+  height: 40px;
+  padding: 5px 20px 5px 40px;
+  font-size: 1.1em;
+  outline: none;
+  border: 1px solid var(--black2);
+  border-radius: 40px;
+  -webkit-border-radius: 40px;
+  -moz-border-radius: 40px;
+  -ms-border-radius: 40px;
+  -o-border-radius: 40px;
+}
+
+.addForm button {
+  width: 35px;
+  height: 35px;
+  border: solid 1px var(--black2);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .css-204u17-MuiDataGrid-main {

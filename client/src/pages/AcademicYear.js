@@ -1,9 +1,10 @@
 import "../styles/Dashboard.css";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
 import SearchItem from "../components/SearchItem";
+import AddItem from "../components/AddItem";
 import DataTable from "./../components/DataTable";
 
 const columns = [
@@ -25,13 +26,44 @@ const rows = [
 
 function AcademicYear() {
   const [search, setSearch] = useState("");
+  const [newItem, setNewItem] = useState("");
+
+  const pattern = `^[A-Za-z0-9\u0600-\u06FF]{3,20}$`;
+  const addItem = (item) => {
+    console.log(item);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!newItem) return;
+    // addItem
+
+    addItem(newItem);
+    setNewItem("");
+  };
   return (
     <>
       <Sidebar />
       <div className="main">
         <Topbar />
         <div className="content">
-          <SearchItem search={search} setSearch={setSearch} />
+          <div className="operations">
+            <div className="add-item">
+              <AddItem
+                label={"إضافة العام الدراسى"}
+                placeholder={"العام الدراسى"}
+                pattern={pattern}
+                newItem={newItem}
+                setNewItem={setNewItem}
+                handleSubmit={handleSubmit}
+              />
+            </div>
+            <SearchItem
+              pattern={pattern}
+              search={search}
+              setSearch={setSearch}
+            />
+          </div>
           <DataTable
             columns={columns}
             rows={rows.filter((item) =>

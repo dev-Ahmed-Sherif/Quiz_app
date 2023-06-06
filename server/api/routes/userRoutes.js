@@ -17,15 +17,13 @@ const createToken = (id) => {
   });
 };
 
-router.get("/", requireAuth, (req, res) => {
-  User.find((err, data) => {
-    if (err) {
-      console.log(err);
-      res.send({ message: "لا يوجد بيانات" });
-    } else {
-      res.sendStatus(200).send({ data: data });
-    }
-  });
+router.get("/", requireAuth, async (req, res) => {
+  try {
+    // console.log("loged");
+    const users = await User.find({});
+    console.log(users);
+    res.status(200).send({ data: users });
+  } catch (error) {}
 });
 
 router.post("/login", async (req, res) => {
@@ -60,9 +58,7 @@ router.post("/create", requireAuth, (req, res) => {
   });
   user.save().then((data) => {
     console.log(data);
-    res
-      .sendStatus(200)
-      .send({ message: "تم اضافة مستخدم جديد بنجاح", data: data });
+    res.status(200).send({ message: "تم اضافة مستخدم جديد بنجاح", data: data });
   });
 });
 
@@ -90,7 +86,7 @@ router.patch("/update-details", requireAuth, (req, res) => {
         res.send({ message: "لم يتم التعديل" });
       } else {
         console.log(data);
-        res.sendStatus(200).send({ message: "تم التعديل بنجاح", data: data });
+        res.status(200).send({ message: "تم التعديل بنجاح", data: data });
       }
     }
   );
@@ -103,7 +99,7 @@ router.delete("/delete", requireAuth, (req, res) => {
       res.send({ message: "لم يتم الحذف" });
     } else {
       console.log(data);
-      res.sendStatus(200).send({ message: "تم الحذف بنجاح" });
+      res.status(200).send({ message: "تم الحذف بنجاح" });
     }
   });
 });

@@ -3,14 +3,13 @@ const router = express.Router();
 const Quiz = require("../models/quiz");
 const { requireAuth } = require("../middleware/authMiddleware");
 
-router.get("/", requireAuth, (req, res) => {
-  Quiz.find((err, data) => {
-    if (err) {
-      res.send({ message: "لا يوجد بيانات" });
-    } else {
-      res.sendStatus(200).send({ data: data });
-    }
-  });
+router.get("/", requireAuth, async (req, res) => {
+  try {
+    // console.log("loged");
+    const quiz = await Quiz.find({});
+    console.log(quiz);
+    res.status(200).send({ data: quiz });
+  } catch (error) {}
 });
 
 router.post("/create", requireAuth, (req, res) => {
@@ -21,7 +20,7 @@ router.post("/create", requireAuth, (req, res) => {
 
   quiz.save().then((data) => {
     console.log(data);
-    res.sendStatus(200).send({ message: "تم إضافة إمتحان بنجاح", data: data });
+    res.status(200).send({ message: "تم إضافة إمتحان بنجاح", data: data });
   });
 });
 
@@ -34,7 +33,7 @@ router.delete("/delete", requireAuth, (req, res) => {
       res.send({ message: "لم يتم الحذف" });
     } else {
       console.log(data);
-      res.sendStatus(200).send({ message: "تم الحذف بنجاح" });
+      res.status(200).send({ message: "تم الحذف بنجاح" });
     }
   });
 });

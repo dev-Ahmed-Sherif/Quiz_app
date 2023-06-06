@@ -3,13 +3,13 @@ const router = express.Router();
 const academicYear = require("../models/academicYear");
 const { requireAuth } = require("../middleware/authMiddleware");
 
-router.get("/", requireAuth, (req, res) => {
-  academicYear.find((err, data) => {
-    if (err) {
-      res.send({ message: "لا يوجد بيانات" });
-    }
-    res.sendStatus(200).send({ data: data });
-  });
+router.get("/", requireAuth, async (req, res) => {
+  try {
+    // console.log("loged");
+    const academicYear = await academicYear.find({});
+    console.log(academicYear);
+    res.status(200).send({ data: academicYear });
+  } catch (error) {}
 });
 
 router.post("/create", requireAuth, (req, res) => {
@@ -20,9 +20,7 @@ router.post("/create", requireAuth, (req, res) => {
 
   Year.save().then((data) => {
     console.log(data);
-    res
-      .sendStatus(200)
-      .send({ message: "تم إضافة عام دراسى بنجاح", data: data });
+    res.status(200).send({ message: "تم إضافة عام دراسى بنجاح", data: data });
   });
 });
 
@@ -36,7 +34,7 @@ router.patch("/update", requireAuth, (req, res) => {
         res.send({ message: "لم يتم التعديل" });
       } else {
         console.log(data);
-        res.sendStatus(200).send({ message: "تم التعديل بنجاح", data: data });
+        res.status(200).send({ message: "تم التعديل بنجاح", data: data });
       }
     }
   );
@@ -49,7 +47,7 @@ router.delete("/delete", requireAuth, (req, res) => {
       res.send({ message: "لم يتم الحذف" });
     } else {
       console.log(data);
-      res.sendStatus(200).send({ message: "تم الحذف بنجاح" });
+      res.status(200).send({ message: "تم الحذف بنجاح" });
     }
   });
 });
