@@ -4,7 +4,9 @@ export const resultReducer = createSlice({
   name: "result",
   initialState: {
     userId: null,
-    userName: null,
+    userName: JSON.parse(window.localStorage.getItem("AdminName"))
+      ? JSON.parse(window.localStorage.getItem("AdminName"))
+      : "",
     result: [],
   },
   reducers: {

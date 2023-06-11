@@ -35,9 +35,9 @@ router.post("/login", async (req, res) => {
       const token = createToken(user._id);
 
       res.cookie("authToken", token, {
-        // secure: true,
-        sameSite: "strict",
-        path: "/",
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
         maxAge: maxAge * 1000,
       });
       res.status(200).send({ user, token: token });

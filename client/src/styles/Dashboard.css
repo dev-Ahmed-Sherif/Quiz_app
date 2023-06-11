@@ -312,8 +312,12 @@ a {
   left: 7px;
   background-color: var(--blue);
   border-radius: var(--border-radius);
-  padding: 10px 20px;
+  padding: 20px;
   width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .dropdown-menu::before {
@@ -341,7 +345,7 @@ a {
   transition: var(--speed) ease;
 }
 
-h3 {
+.dropdown-menu h3 {
   width: 100%;
   text-align: center;
   font-size: 18px;
@@ -350,6 +354,14 @@ h3 {
   font-size: 18px;
   color: var(--white);
   line-height: 1.2rem;
+}
+
+.dropdown-menu button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80px;
+  padding: 3px 5px;
 }
 
 h3 span {

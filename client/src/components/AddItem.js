@@ -27,6 +27,7 @@ function AddItem({
         value={newItem}
         onChange={(e) => setNewItem(e.target.value)}
         onKeyDown={(e) => onKeyPress(e)}
+        onInvalid={(e) => e.target.setCustomValidity("لم يتم إدخال بيانات")}
         required
       />
       <button

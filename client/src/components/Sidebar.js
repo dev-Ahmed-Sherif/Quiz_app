@@ -12,6 +12,7 @@ function Sidebar() {
   // const [selectedLink, setSelectedLink] = useState("الطلاب");
 
   const selectedLink = useSelector((state) => state.link.link);
+  // console.log(selectedLink);
   const dispatch = useDispatch();
 
   // console.log(selectedLink);

@@ -1,58 +1,63 @@
 import "../styles/Dashboard.css";
 
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
+
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
 import SearchItem from "../components/SearchItem";
 import AddItem from "../components/AddItem";
 import DataTable from "./../components/DataTable";
 
-const columns = [
-  { field: "id", headerName: "الرقم", width: 70 },
-  { field: "name", headerName: "الماة الدراسية", width: 130 },
-];
+const pattern = `^[A-Za-z\u0600-\u06FF\\s]{3,30}$`;
 
-const rows = [
-  { id: 1, name: "Snow" },
-  { id: 2, name: "Lannister" },
-  { id: 3, name: "Lannister" },
-  { id: 4, name: "Stark" },
-  { id: 5, name: "Targaryen" },
-  { id: 6, name: "Melisandre" },
-  { id: 7, name: "Clifford" },
-  { id: 8, name: "Frances" },
-  { id: 9, name: "Roxie" },
-];
+const ADD_URI_BACK = "/api/subjects/create";
+const DELETE_URI_BACK = "/api/subjects/delete";
+const GET_URI_BACK = "/api/subjects";
 
 function AcademicSubject() {
+  const columns = [
+    { field: "_id", headerName: "الرقم", width: 70 },
+    { field: "name", headerName: "الماة الدراسية", width: 200 },
+    { field: "dateAdded", headerName: "تاريخ التسجيل", width: 270 },
+    {
+      field: "action",
+      headerName: "",
+      sortable: false,
+      width: 160,
+      renderCell: (params) => {
+        return (
+          <>
+            <Link to={"/user-dashboard/" + params.row._id}>
+              <button className="edit"> تعديل </button>
+            </Link>
+            <button>
+              <DeleteIcon
+                className="delete"
+                onClick={() => handleDelete(params.row._id)}
+              />
+            </button>
+          </>
+        );
+      },
+    },
+  ];
+
   const [search, setSearch] = useState("");
   const [newItem, setNewItem] = useState("");
+  const [rows, setRows] = useState([{ _id: "", name: "" }]);
 
-  const pattern = `^[A-Za-z\u0600-\u06FF]{3,20}$`;
-
-  const ADDSUBJECT_URI__BACK = "/api/subjects/create";
+  useEffect(() => {
+    getData();
+  }, []);
 
   const preventNumber = (e) => {
     if (/\d/.test(e.key)) {
       e.preventDefault();
     }
-  };
-
-  const addItem = async (item) => {
-    try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_SERVER_HOSTNAME}${ADDSUBJECT_URI__BACK}`,
-        {
-          name: item,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
-      console.log(res);
-    } catch (error) {}
   };
 
   const handleSubmit = (e) => {
@@ -62,6 +67,54 @@ function AcademicSubject() {
     // addItem
     addItem(newItem);
     setNewItem("");
+  };
+
+  const getData = async () => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_SERVER_HOSTNAME}${GET_URI_BACK}`,
+        { withCredentials: true }
+      );
+      console.log(data.data);
+      setRows([...data.data]);
+      // console.log(rows);
+    } catch (error) {}
+  };
+
+  const addItem = async (item) => {
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_SERVER_HOSTNAME}${ADD_URI_BACK}`,
+        {
+          name: item,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(res);
+
+      if (res.status === 200) {
+        setRows((prev) => [...prev, res.data.data]);
+      }
+    } catch (error) {}
+  };
+
+  const handleDelete = async (id) => {
+    console.log(id);
+    try {
+      const res = await axios.delete(
+        `${process.env.REACT_APP_SERVER_HOSTNAME}${DELETE_URI_BACK}`,
+        {
+          data: { _id: id },
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(res);
+      setRows([...res.data.data]);
+    } catch (error) {}
   };
 
   return (
@@ -90,9 +143,14 @@ function AcademicSubject() {
           </div>
           <DataTable
             columns={columns}
-            rows={rows.filter((item) =>
-              item.name.toLowerCase().includes(search.toLowerCase())
-            )}
+            rows={rows.filter((item, index) => {
+              // console.log(item);
+              // console.log(item._id);
+              // console.log(typeof item._id);
+              if (item._id !== "") {
+                return item.name.toLowerCase().includes(search.toLowerCase());
+              }
+            })}
           />
         </div>
       </div>

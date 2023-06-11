@@ -74,10 +74,14 @@ export default function Main() {
 
       // Check User Role
       const role = res.data.user.role;
+      // console.log(role);
 
-      console.log(role);
       if (role === "admin") {
         dispatch(setUser(values));
+        window.localStorage.setItem(
+          "AdminName",
+          JSON.stringify(res.data.user.name)
+        );
         navigate(DASH_URI_HOME);
       } else if (role === "student") {
         dispatch(setUser(values));

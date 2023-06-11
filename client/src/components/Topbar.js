@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import * as Action from "../redux/link_reducer";
 import ListItem from "./ListItem";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 function Topbar() {
   const [open, setOpen] = useState(false);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   let menuRef = useRef();
 
@@ -24,6 +29,14 @@ function Topbar() {
       document.removeEventListener("mousedown", handler);
     };
   });
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    window.localStorage.setItem("link", JSON.stringify("الطلاب"));
+    window.localStorage.removeItem("AdminName");
+    dispatch(Action.setLink("الطلاب"));
+    navigate("/");
+  };
 
   return (
     <div className="topbar">
@@ -55,6 +68,10 @@ function Topbar() {
             {name}
             <br />
           </h3>
+          <button onClick={(e) => handleLogout(e)}>
+            <h4>logout</h4>
+            <LogoutIcon />
+          </button>
           <ul>
             <ListItem position="topbar" text={"My Profile"} />
             <ListItem position="topbar" text={"Edit Profile"} />

@@ -26,6 +26,7 @@ export default function DataTable({ columns, rows }) {
         }}
         pageSizeOptions={[5, 10]}
         checkboxSelection
+        getRowId={(row) => row._id}
       />
     </div>
   );
