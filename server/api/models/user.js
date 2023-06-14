@@ -24,6 +24,9 @@ const userSchema = new mongoose.Schema(
     dateRegister: {
       type: String,
     },
+    dateUpdate: {
+      type: String,
+    },
   },
   {
     versionKey: false,

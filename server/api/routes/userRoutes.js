@@ -17,10 +17,22 @@ const createToken = (id) => {
   });
 };
 
+// Time Options
+
+let options = {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+};
+
 router.get("/", requireAuth, async (req, res) => {
   try {
     // console.log("loged");
-    const users = await User.find({});
+    const users = await User.find({ role: { $eq: "student" } }).populate({
+      path: "academicYearId",
+    });
     console.log(users);
     res.status(200).send({ data: users });
   } catch (error) {}
@@ -53,8 +65,8 @@ router.post("/create", requireAuth, (req, res) => {
   const user = new User({
     name: req.body.name,
     password: req.body.password,
-    role: req.body.role,
-    dateRegister: new Date(),
+    academicYearId: req.body.year,
+    dateRegister: new Date().toLocaleDateString("ar-EG", options),
   });
   user.save().then((data) => {
     console.log(data);
@@ -67,7 +79,7 @@ router.post("/create-test", (req, res) => {
     name: req.body.name,
     password: req.body.password,
     role: req.body.role,
-    dateRegister: new Date(),
+    dateRegister: new Date().toLocaleDateString("ar-EG", options),
   });
   user.save().then((data) => {
     console.log(data);
@@ -79,7 +91,11 @@ router.patch("/update-details", requireAuth, (req, res) => {
   console.log(req.body);
   User.findOneAndUpdate(
     { _id: req.body._id },
-    { name: req.body.name, password: req.body.password },
+    {
+      name: req.body.name,
+      password: req.body.password,
+      dateUpdate: new Date().toLocaleDateString("ar-EG", options),
+    },
     (err, data) => {
       if (err) {
         console.log(err);
@@ -92,16 +108,19 @@ router.patch("/update-details", requireAuth, (req, res) => {
   );
 });
 
-router.delete("/delete", requireAuth, (req, res) => {
-  User.deleteOne({ _id: req.body._id }, (err, data) => {
-    if (err) {
-      console.log(err);
-      res.send({ message: "لم يتم الحذف" });
+router.delete("/delete", requireAuth, async (req, res) => {
+  try {
+    const user = await User.deleteOne({ _id: req.body._id });
+    if (user) {
+      // console.log(user);
+      const users = await User.find({ role: { $eq: "student" } });
+      res.status(200).send({ message: "تم الحذف بنجاح", data: users });
     } else {
-      console.log(data);
-      res.status(200).send({ message: "تم الحذف بنجاح" });
+      res.send({ message: "لم يتم الحذف" });
     }
-  });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 module.exports = router;

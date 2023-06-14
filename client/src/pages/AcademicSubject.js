@@ -31,9 +31,9 @@ function AcademicSubject() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/user-dashboard/" + params.row._id}>
+            {/* <Link to={"/user-dashboard/" + params.row._id}>
               <button className="edit"> تعديل </button>
-            </Link>
+            </Link> */}
             <button>
               <DeleteIcon
                 className="delete"
