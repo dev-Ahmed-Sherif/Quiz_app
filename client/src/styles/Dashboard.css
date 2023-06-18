@@ -282,7 +282,7 @@
   background-color: var(--light-color);
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   padding: 7rem 2rem 2rem 2rem;
 }
 
@@ -426,7 +426,8 @@ h3 span {
   -o-border-radius: 14px;
 }
 
-.add-item p {
+.add-item p,
+.stud-details p {
   text-align: center;
   font-size: larger;
   color: red;
@@ -462,6 +463,49 @@ h3 span {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.form-student .edit {
+  font-size: large;
+  width: fit-content;
+  padding: 4px 10px;
+  border: 2px solid var(--black2);
+  border-radius: 14px;
+  -webkit-border-radius: 14px;
+  -moz-border-radius: 14px;
+  -ms-border-radius: 14px;
+  -o-border-radius: 14px;
+}
+
+.stud-details {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.stud-details img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+
+.stud-details input {
+  text-align: center;
+  font-size: large;
+}
+
+.stud-details button,
+.stud-details input {
+  padding: 10px;
+  border: var(--black2) 2px solid;
+  border-radius: 14px;
 }
 
 .addForm {

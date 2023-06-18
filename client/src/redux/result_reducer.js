@@ -3,16 +3,23 @@ import { createSlice } from "@reduxjs/toolkit";
 export const resultReducer = createSlice({
   name: "result",
   initialState: {
-    userId: null,
-    userName: JSON.parse(window.localStorage.getItem("AdminName"))
-      ? JSON.parse(window.localStorage.getItem("AdminName"))
+    userId: JSON.parse(window.localStorage.getItem("id"))
+      ? JSON.parse(window.localStorage.getItem("id"))
+      : "",
+    userName: JSON.parse(window.localStorage.getItem("Name"))
+      ? JSON.parse(window.localStorage.getItem("Name"))
       : "",
     result: [],
   },
   reducers: {
     setUser: (state, action) => {
       // console.log(action.payload);
-      state.userName = action.payload.username;
+      // console.log(state.userId);
+      // console.log(state.userName);
+      state.userName = action.payload.name;
+      state.userId = action.payload._id;
+      // console.log(state.userId);
+      // console.log(state.userName);
     },
     pushResultAction: (state, action) => {
       state.result.push(action.payload);

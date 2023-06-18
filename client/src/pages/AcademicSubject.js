@@ -1,8 +1,9 @@
-import "../styles/Dashboard.css";
-
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+
+import "../styles/Dashboard.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 
@@ -51,7 +52,9 @@ function AcademicSubject() {
   const [rows, setRows] = useState([{ _id: "", name: "" }]);
 
   useEffect(() => {
-    getData();
+    if (rows.length === 1) {
+      getData();
+    }
   }, []);
 
   const preventNumber = (e) => {
@@ -96,6 +99,7 @@ function AcademicSubject() {
       console.log(res);
 
       if (res.status === 200) {
+        notfyAdd();
         setRows((prev) => [...prev, res.data.data]);
       }
     } catch (error) {}
@@ -113,8 +117,35 @@ function AcademicSubject() {
         }
       );
       console.log(res);
+      notfyDelete();
       setRows([...res.data.data]);
     } catch (error) {}
+  };
+
+  const notfyAdd = () => {
+    toast.info("👍👍👍 تم إضافة المادة بنجاح", {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const notfyDelete = () => {
+    toast.info("👍👍👍 تم حذف المادة بنجاح", {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
 
   return (
@@ -154,6 +185,18 @@ function AcademicSubject() {
           />
         </div>
       </div>
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 }

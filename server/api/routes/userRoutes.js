@@ -30,11 +30,21 @@ let options = {
 router.get("/", requireAuth, async (req, res) => {
   try {
     // console.log("loged");
-    const users = await User.find({ role: { $eq: "student" } }).populate({
-      path: "academicYearId",
-    });
-    console.log(users);
+    const users = await User.find({ role: { $eq: "student" } });
+    // console.log(users);
     res.status(200).send({ data: users });
+  } catch (error) {}
+});
+
+router.post("/get-user", requireAuth, async (req, res) => {
+  console.log("loged get user");
+  console.log(req.body);
+  try {
+    const user = await User.findOne({ _id: req.body.id }).populate(
+      "academicYearId"
+    );
+    console.log(user);
+    res.status(200).send({ data: user });
   } catch (error) {}
 });
 
@@ -87,25 +97,27 @@ router.post("/create-test", (req, res) => {
   });
 });
 
-router.patch("/update-details", requireAuth, (req, res) => {
+router.patch("/update-details", requireAuth, async (req, res) => {
   console.log(req.body);
-  User.findOneAndUpdate(
-    { _id: req.body._id },
+  const user = await User.findOneAndUpdate(
+    { _id: req.body.id },
     {
       name: req.body.name,
       password: req.body.password,
+      academicYearId: req.body.year,
       dateUpdate: new Date().toLocaleDateString("ar-EG", options),
-    },
-    (err, data) => {
-      if (err) {
-        console.log(err);
-        res.send({ message: "لم يتم التعديل" });
-      } else {
-        console.log(data);
-        res.status(200).send({ message: "تم التعديل بنجاح", data: data });
-      }
     }
   );
+  // console.log(user);
+  if (user) {
+    const updatedUser = await User.findOne({ _id: req.body.id }).populate(
+      "academicYearId"
+    );
+    console.log(updatedUser);
+    res.status(200).send({ message: "تم التعديل بنجاح", data: updatedUser });
+  } else {
+    res.status(200).send({ message: "هذا الشخص لا يوجد له سجل" });
+  }
 });
 
 router.delete("/delete", requireAuth, async (req, res) => {

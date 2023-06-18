@@ -12,9 +12,11 @@ import Quiz from "./pages/Quiz";
 import Result from "./pages/Result";
 import Dashboard from "./pages/Dashboard";
 import Users from "./pages/Users";
+import StudentDetails from "./pages/StudentDetails";
 import QuizzesDashboard from "./pages/QuizzesDashboard";
 import AcademicSubject from "./pages/AcademicSubject";
 import AcademicYear from "./pages/AcademicYear";
+import EditStudent from "./pages/EditStudent";
 
 /** react routes */
 const router = createBrowserRouter([
@@ -35,37 +37,49 @@ const router = createBrowserRouter([
   {
     path: "/users-dashboard",
     element: (
-      <Users />
-      // <CheckUserExist>
-      //   <Users />
-      // </CheckUserExist>
+      <CheckUserExist>
+        <Users />
+      </CheckUserExist>
     ),
   },
   {
+    path: "/users-dashboard/user-details/:_id",
+    element: (
+      <CheckUserExist>
+        <StudentDetails />
+      </CheckUserExist>
+    ),
+  },
+  // {
+  //   path: "/users-dashboard/user-edit/:_id",
+  //   element: (
+  //     <CheckUserExist>
+  //       <EditStudent />
+  //     </CheckUserExist>
+  //   ),
+  // },
+  {
     path: "/quizzes-dashboard",
     element: (
-      <QuizzesDashboard />
-      // <CheckUserExist>
-      //   <QuizzesDashboard />
-      // </CheckUserExist>
+      <CheckUserExist>
+        <QuizzesDashboard />
+      </CheckUserExist>
     ),
   },
   {
     path: "/academic-subjects",
     element: (
-      <AcademicSubject />
-      // <CheckUserExist>
-      //   <QuizzesDashboard />
-      // </CheckUserExist>
+      <CheckUserExist>
+        <AcademicSubject />
+      </CheckUserExist>
     ),
   },
   {
     path: "/academic-years",
     element: (
-      <AcademicYear />
-      // <CheckUserExist>
-      //   <QuizzesDashboard />
-      // </CheckUserExist>
+      <CheckUserExist>
+        <AcademicYear />
+      </CheckUserExist>
     ),
   },
   {
@@ -87,17 +101,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  // Try to prevent refresh button
-
-  // useEffect(() => {
-  //   window.addEventListener("beforeunload", (e) => {
-  //     e.preventDefault();
-  //     console.log("loaded");
-  //     console.log(e);
-  //     // e.returnValue = "hello";
-  //     return true;
-  //   });
-  // });
   return (
     <>
       <RouterProvider router={router} />

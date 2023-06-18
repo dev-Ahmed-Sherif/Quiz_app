@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import axios from "axios";
 import { setUser } from "../redux/result_reducer";
@@ -77,18 +77,16 @@ export default function Main() {
       // console.log(role);
 
       if (role === "admin") {
-        dispatch(setUser(values));
-        window.localStorage.setItem(
-          "AdminName",
-          JSON.stringify(res.data.user.name)
-        );
+        dispatch(setUser(res.data.user));
+        window.localStorage.setItem("Name", JSON.stringify(res.data.user.name));
         navigate(DASH_URI_HOME);
       } else if (role === "student") {
-        dispatch(setUser(values));
+        dispatch(setUser(res.data.user));
+        window.localStorage.setItem("Name", JSON.stringify(res.data.user.name));
+        window.localStorage.setItem("id", JSON.stringify(res.data.user._id));
         navigate(QUIZ_URI_HOME);
       }
     } catch (error) {}
-    const data = new FormData(e.target);
   };
 
   const onChange = (e) => {
@@ -96,29 +94,11 @@ export default function Main() {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  // const startQuiz = () => {
-  //   console.log(values);
-  //   dispatch(setUser(values));
-  //   console.log(inputRef.current);
-  //   if(inputRef.current?.value){
-  //     dispatch(setUserId(inputRef.current?.value))
-  //   }
-  // };
-
   return (
     <div className="container">
       <img src="./logo.jpeg" alt="" />
       <h1 style={{ color: "#5a8eff" }}> إختبارات </h1>
       <img src="./exams.png" alt="" />
-      {/* <h1 className='title text-light'>Quiz Application</h1>
-
-        <ol>
-            <li>You will be asked 10 questions one after another.</li>
-            <li>10 points is awarded for the correct answer.</li>
-            <li>Each question has three options. You can choose only one options.</li>
-            <li>You can review and change answers before the quiz finish.</li>
-            <li>The result will be declared at the end of the quiz.</li>
-        </ol> */}
 
       <form id="form" className="form-grid start" onSubmit={handleSubmit}>
         {inputs.map((input) => (
@@ -134,11 +114,6 @@ export default function Main() {
       </form>
 
       {errorMsg !== undefined ? <p> {errorMsg} </p> : <p></p>}
-      {/* <div className="start">
-        <Link className="btn" to={"/quiz"} onClick={startQuiz}>
-          تسجيل الدخول
-        </Link>
-      </div> */}
     </div>
   );
 }

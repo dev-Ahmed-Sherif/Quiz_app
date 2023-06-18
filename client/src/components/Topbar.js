@@ -5,6 +5,8 @@ import * as Action from "../redux/link_reducer";
 import ListItem from "./ListItem";
 import LogoutIcon from "@mui/icons-material/Logout";
 
+import imageName from "../img/person.png";
+
 function Topbar() {
   const [open, setOpen] = useState(false);
 
@@ -33,7 +35,7 @@ function Topbar() {
   const handleLogout = (e) => {
     e.preventDefault();
     window.localStorage.setItem("link", JSON.stringify("الطلاب"));
-    window.localStorage.removeItem("AdminName");
+    window.localStorage.removeItem("Name");
     dispatch(Action.setLink("الطلاب"));
     navigate("/");
   };
@@ -60,7 +62,7 @@ function Topbar() {
             setOpen(!open);
           }}
         >
-          <img src="./person.png" alt="" />
+          <img src={imageName} alt="" />
         </div>
 
         <div className={`dropdown-menu ${open ? "active" : "inactive"}`}>

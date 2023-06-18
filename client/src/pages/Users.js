@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
+import "react-toastify/dist/ReactToastify.css";
 import "../styles/Dashboard.css";
 
 import Topbar from "../components/Topbar";
@@ -16,7 +18,6 @@ import { FaPlus } from "react-icons/fa";
 const pattern = `^[A-Za-z\u0600-\u06FF\\s]{3,30}$`;
 
 const ADD_URI_BACK = "/api/users/create";
-const UPDATE_URI_BACK = "/api/users/update-details";
 const DELETE_URI_BACK = "/api/users/delete";
 const GET_USERS_URI_BACK = "/api/users";
 
@@ -28,8 +29,8 @@ function Users() {
   const columns = [
     { field: "_id", headerName: "الرقم", width: 70 },
     { field: "name", headerName: "الأسم", width: 130 },
-    { field: "password", headerName: "الباسورد", width: 130 },
-    { field: "dateUpdate", headerName: "أخر تعديل", width: 130 },
+    { field: "password", headerName: "الباسورد", width: 100 },
+    { field: "dateUpdate", headerName: "أخر تعديل", width: 180 },
     { field: "dateRegister", headerName: "تاريخ التسجيل", width: 200 },
     {
       field: "action",
@@ -39,10 +40,10 @@ function Users() {
       renderCell: (params) => {
         return (
           <div className="table">
-            <Link to={"/user-dashboard/" + params.row.id}>
-              <button className="edit"> تعديل </button>
-            </Link>
-            <Link to={"/user-dashboard/" + params.row.id}>
+            {/* <Link to={`/users-dashboard/user-details/${params.row._id}`}>
+              <button className="edit"> تعديل  </button>
+            </Link> */}
+            <Link to={`/users-dashboard/user-details/${params.row._id}`}>
               <button className="edit"> تفاصيل </button>
             </Link>
             <button>
@@ -56,8 +57,6 @@ function Users() {
       },
     },
   ];
-
-  const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
   const [rows, setRows] = useState([{ _id: "" }]);
@@ -119,7 +118,7 @@ function Users() {
       // console.log(data.data);
 
       setRows([...data.data]);
-      // console.log(rows);
+      console.log(rows);
     } catch (error) {}
   };
 
@@ -137,7 +136,9 @@ function Users() {
     if (options.length === 1) {
       getYearsData();
     }
-    getUsersData();
+    if (rows.length === 1) {
+      getUsersData();
+    }
   }, []);
 
   const handleSubmit = async (e) => {
@@ -161,9 +162,9 @@ function Users() {
         );
         console.log(res);
         if (res.status === 200) {
+          notfyAdd();
           setRows((prev) => [...prev, res.data.data]);
           setValues({ username: "", password: "", year: "-1" });
-          // window.location.href = "/users-dashboard";
         }
       } catch (error) {}
     }
@@ -181,6 +182,7 @@ function Users() {
         }
       );
       // console.log(res);
+      notfyDelete();
       setRows([...res.data.data]);
     } catch (error) {}
   };
@@ -189,6 +191,32 @@ function Users() {
     // console.log(e.target.value);
     setValues({ ...values, [e.target.name]: e.target.value });
     setErrorMsg(undefined);
+  };
+
+  const notfyAdd = () => {
+    toast.info("👍👍👍 تم إضافة الطالب بنجاح", {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const notfyDelete = () => {
+    toast.info("👍👍👍 تم حذف الطالب بنجاح", {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
 
   return (
@@ -251,6 +279,18 @@ function Users() {
           />
         </div>
       </div>
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 }

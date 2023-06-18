@@ -18,6 +18,7 @@ const requireAuth = (req, res, next) => {
       }
     });
   } else {
+    console.log("not allowed");
     res.send({ message: "غير مصرح لك بدخول السيستم" });
   }
 };
