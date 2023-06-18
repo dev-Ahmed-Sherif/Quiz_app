@@ -58,14 +58,23 @@ function Users() {
     },
   ];
 
+  // Search Options
   const [search, setSearch] = useState("");
+  const [selectedYear, setSelectedYear] = useState("-2");
+  // console.log("selected year", selectedYear);
+  // console.log("selected year", typeof selectedYear);
+
   const [rows, setRows] = useState([{ _id: "" }]);
+  const [filterRows, setFilterRows] = useState([]);
+  // console.log("users: ", rows);
+  // console.log("users filter: ", filterRows);
 
   const [values, setValues] = useState({
     username: "",
     password: "",
     year: "",
   });
+
   const [options, setOptions] = useState([{ _id: "-1", name: "أختر" }]);
 
   // console.log(options);
@@ -104,7 +113,7 @@ function Users() {
       if (status === 200) {
         setOptions((prev) => [...prev, ...data.data]);
       }
-      console.log(options);
+      // console.log(options);
       // console.log(rows);
     } catch (error) {}
   };
@@ -115,10 +124,23 @@ function Users() {
         `${process.env.REACT_APP_SERVER_HOSTNAME}${GET_USERS_URI_BACK}`,
         { withCredentials: true }
       );
-      // console.log(data.data);
+      // console.log("res data ", data.data);
+      // console.log("selected year in get user ", selectedYear);
 
+      // if (selectedYear !== "-2" && selectedYear !== "-1") {
+      //   console.log("loged");
+      //   const updatedRows = rows.filter((item) => {
+      //     if (item.academicYearId === selectedYear) {
+      //       return item;
+      //     }
+      //   });
+      //   setRows([...updatedRows]);
+      // } else {
+      //   setRows([...data.data]);
+      // }
       setRows([...data.data]);
-      console.log(rows);
+      setFilterRows([...data.data]);
+      // console.log(rows);
     } catch (error) {}
   };
 
@@ -160,7 +182,7 @@ function Users() {
             withCredentials: true,
           }
         );
-        console.log(res);
+        // console.log(res);
         if (res.status === 200) {
           notfyAdd();
           setRows((prev) => [...prev, res.data.data]);
@@ -171,7 +193,7 @@ function Users() {
   };
 
   const handleDelete = async (id) => {
-    console.log(id);
+    // console.log(id);
     try {
       const res = await axios.delete(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${DELETE_URI_BACK}`,
@@ -191,6 +213,23 @@ function Users() {
     // console.log(e.target.value);
     setValues({ ...values, [e.target.name]: e.target.value });
     setErrorMsg(undefined);
+  };
+
+  const handleSelectedYear = (e) => {
+    // if (selectedYear !== "-2") {
+    // }
+    // getUsersData();
+    // console.log(e.target.value);
+    // setSelectedYear(e.target.value);
+    setFilterRows([
+      ...rows.filter((item) => {
+        if (item.academicYearId === e.target.value) {
+          return item;
+        } else if (e.target.value === "-1") {
+          return item;
+        }
+      }),
+    ]);
   };
 
   const notfyAdd = () => {
@@ -263,15 +302,32 @@ function Users() {
               </form>
               {errorMsg !== undefined ? <p> {errorMsg} </p> : <p></p>}
             </div>
-            <SearchItem
-              pattern={pattern}
-              search={search}
-              setSearch={setSearch}
-            />
+            <div className="search-options">
+              <h2> البحث عن الطلاب </h2>
+              <h4> البحث بالسنه الدراسية </h4>
+              <select
+                title="select-year"
+                name="year-search"
+                value={selectedYear}
+                onChange={(e) => handleSelectedYear(e)}
+              >
+                {options.map((item) => (
+                  <option key={item._id} value={item._id}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+              <h4> البحث بالأسم </h4>
+              <SearchItem
+                pattern={pattern}
+                search={search}
+                setSearch={setSearch}
+              />
+            </div>
           </div>
           <DataTable
             columns={columns}
-            rows={rows.filter((item) => {
+            rows={filterRows.filter((item) => {
               if (item._id !== "") {
                 return item.name.toLowerCase().includes(search.toLowerCase());
               }

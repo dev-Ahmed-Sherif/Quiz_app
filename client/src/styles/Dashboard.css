@@ -443,7 +443,8 @@ h3 span {
   gap: 21px;
 }
 
-.form-student select {
+.form-student select,
+.search-options select {
   text-align: center;
   padding: 0.7em 0.4em;
   border: none;
@@ -539,6 +540,22 @@ h3 span {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.search-options {
+  direction: rtl;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border: 2px solid blue;
+  border-radius: 14px;
+  -webkit-border-radius: 14px;
+  -moz-border-radius: 14px;
+  -ms-border-radius: 14px;
+  -o-border-radius: 14px;
 }
 
 .table {
