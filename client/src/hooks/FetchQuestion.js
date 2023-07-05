@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { getServerData } from "../helper/helper";
+import { useDispatch, useSelector } from "react-redux";
+import { postServerData } from "../helper/helper";
 
 /** redux actions */
-import * as Action from "../redux/question_reducer";
+import * as Action from "../redux/quiz_reducer";
 
 /** fetch question hook to fetch api data and set value to store */
 export const useFetchQestion = () => {
@@ -25,17 +25,24 @@ export const useFetchQestion = () => {
         //   `${process.env.REACT_APP_SERVER_HOSTNAME}/api/questions`,
         //   (data) => data
         // );
-        const questions = await getServerData(
-          `${process.env.REACT_APP_SERVER_HOSTNAME}/api/questions`,
-          (data) => data
+        const _id = "64902d2722b30937aa347722";
+        const quiz = await postServerData(
+          `${process.env.REACT_APP_SERVER_HOSTNAME}/api/quizzes/quiz-details`,
+          { id: _id },
+          (data) => {
+            // console.log(data);
+            return data;
+          }
         );
-        if (questions.length > 0) {
-          //   console.log("questions");
+        // console.log(quiz);
+        // console.log(quiz.data);
+        if (quiz.data) {
+          console.log(quiz);
           setGetData((prev) => ({ ...prev, isLoading: false }));
-          setGetData((prev) => ({ ...prev, apiData: questions }));
+          setGetData((prev) => ({ ...prev, apiData: quiz.data }));
 
           /** dispatch an action */
-          // dispatch(Action.startExamAction({ question: questions, answers }));
+          dispatch(Action.startExamAction({ quiz: quiz.data }));
         } else {
           //   console.log("questions empty");
           throw new Error("No Question Avalibale");

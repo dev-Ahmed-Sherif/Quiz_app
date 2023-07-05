@@ -7,22 +7,37 @@ import { updateResult } from "../hooks/setResult";
 
 export default function Questions({ onChecked, onPrev, onNext }) {
   const [checked, setChecked] = useState(undefined);
-  const { trace } = useSelector((state) => state.questions);
-  const result = useSelector((state) => state.result.result);
+  const { trace } = useSelector((state) => {
+    console.log(state);
+    return state.quiz;
+  });
+
+  console.log(trace);
+
+  const quiz = useSelector((state) => state.quiz);
+
+  console.log(quiz);
+
+  const result = useSelector((state) => state.user.result);
   const [{ isLoading, apiData, serverError }] = useFetchQestion();
 
-  const questions = useSelector(
-    (state) => state.questions.queue[state.questions.trace]
+  console.log(serverError);
+
+  const question = useSelector(
+    (state) => state.quiz.questions[state.quiz.trace]
   );
+
+  console.log(question);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(updateResult({ trace, checked }));
   }, [checked]);
 
-  function onSelect(i) {
-    onChecked(i);
-    setChecked(i);
+  function onSelect(q) {
+    onChecked(q);
+    setChecked(q);
     dispatch(updateResult({ trace, checked }));
   }
 
@@ -32,29 +47,34 @@ export default function Questions({ onChecked, onPrev, onNext }) {
 
   return (
     <div className="questions">
-      <h1 className="title text-light">Quiz Application</h1>
+      <h3 className="title text-light">{quiz.year}</h3>
+      <h3 className="title text-light">{quiz.subject}</h3>
+      <h3 className="title text-light">{quiz?.month}</h3>
       {/* ? this for access the value when it not null or undefined */}
-      <h2 className="text-light">{questions?.question}</h2>
 
-      <ul key={questions?.id}>
-        {questions?.options.map((q, i) => (
-          <li key={i}>
-            <input
-              type="radio"
-              value={false}
-              name="options"
-              id={`q${i}-option`}
-              onChange={() => onSelect(i)}
-            />
+      <h3> {question?.question} </h3>
+      <ul key={question?._id}>
+        {question?.options.map((q, i) => {
+          // console.log(i);
+          return (
+            <li key={i}>
+              <input
+                type="radio"
+                value={false}
+                name="options"
+                id={`q${i}-option`}
+                onChange={() => onSelect(q)}
+              />
 
-            <label className="text-primary" htmlFor={`q${i}-option`}>
-              {q}
-            </label>
-            <div
-              className={`check ${result[trace] === i ? "checked" : ""}`}
-            ></div>
-          </li>
-        ))}
+              <label className="text-primary" htmlFor={`q${i}-option`}>
+                {q}
+              </label>
+              <div
+                className={`check ${result[trace] === q ? "checked" : ""}`}
+              ></div>
+            </li>
+          );
+        })}
       </ul>
       <div className="grid">
         {trace > 0 ? (

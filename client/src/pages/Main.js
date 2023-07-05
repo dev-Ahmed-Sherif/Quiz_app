@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import axios from "axios";
-import { setUser } from "../redux/result_reducer";
+import { setUser } from "../redux/user_reducer";
 import "../styles/Main.css";
 
 export default function Main() {

@@ -14,6 +14,8 @@ import Dashboard from "./pages/Dashboard";
 import Users from "./pages/Users";
 import StudentDetails from "./pages/StudentDetails";
 import QuizzesDashboard from "./pages/QuizzesDashboard";
+import AddQuiz from "./pages/Add-quiz";
+import AddQuestions from "./pages/add-questions";
 import AcademicSubject from "./pages/AcademicSubject";
 import AcademicYear from "./pages/AcademicYear";
 import EditStudent from "./pages/EditStudent";
@@ -43,7 +45,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/users-dashboard/user-details/:_id",
+    path: "/student-details/:_id",
     element: (
       <CheckUserExist>
         <StudentDetails />
@@ -63,6 +65,22 @@ const router = createBrowserRouter([
     element: (
       <CheckUserExist>
         <QuizzesDashboard />
+      </CheckUserExist>
+    ),
+  },
+  {
+    path: "/add-quiz",
+    element: (
+      <CheckUserExist>
+        <AddQuiz />
+      </CheckUserExist>
+    ),
+  },
+  {
+    path: "/add-ques/:_id",
+    element: (
+      <CheckUserExist>
+        <AddQuestions />
       </CheckUserExist>
     ),
   },

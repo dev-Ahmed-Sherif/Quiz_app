@@ -43,7 +43,7 @@ function Users() {
             {/* <Link to={`/users-dashboard/user-details/${params.row._id}`}>
               <button className="edit"> تعديل  </button>
             </Link> */}
-            <Link to={`/users-dashboard/user-details/${params.row._id}`}>
+            <Link to={`/student-details/${params.row._id}`}>
               <button className="edit"> تفاصيل </button>
             </Link>
             <button>
@@ -60,13 +60,15 @@ function Users() {
 
   // Search Options
   const [search, setSearch] = useState("");
+  // console.log(search);
   const [selectedYear, setSelectedYear] = useState("-2");
   // console.log("selected year", selectedYear);
   // console.log("selected year", typeof selectedYear);
 
   const [rows, setRows] = useState([{ _id: "" }]);
+  // console.log(rows);
   const [filterRows, setFilterRows] = useState([]);
-  // console.log("users: ", rows);
+  // console.log("filtered: ", rows);
   // console.log("users filter: ", filterRows);
 
   const [values, setValues] = useState({
@@ -145,6 +147,8 @@ function Users() {
   };
 
   useEffect(() => {
+    // console.log("render always");
+
     function preback() {
       window.history.forward();
     }
@@ -155,6 +159,7 @@ function Users() {
   });
 
   useEffect(() => {
+    // console.log("render");
     if (options.length === 1) {
       getYearsData();
     }
@@ -166,9 +171,10 @@ function Users() {
   const handleSubmit = async (e) => {
     // console.log("clicked");
     e.preventDefault();
-    if (values.year === "") {
+    if (values.year === "" || values.year === "-1") {
       setErrorMsg("يجب اختيار العام الدراسى");
     } else {
+      setSearch("");
       try {
         const res = await axios.post(
           `${process.env.REACT_APP_SERVER_HOSTNAME}${ADD_URI_BACK}`,
@@ -185,8 +191,9 @@ function Users() {
         // console.log(res);
         if (res.status === 200) {
           notfyAdd();
-          setRows((prev) => [...prev, res.data.data]);
           setValues({ username: "", password: "", year: "-1" });
+          setRows((prev) => [...prev, res.data.data]);
+          setFilterRows((prev) => [...prev, res.data.data]);
         }
       } catch (error) {}
     }
@@ -206,6 +213,7 @@ function Users() {
       // console.log(res);
       notfyDelete();
       setRows([...res.data.data]);
+      setFilterRows([...res.data.data]);
     } catch (error) {}
   };
 
@@ -220,7 +228,7 @@ function Users() {
     // }
     // getUsersData();
     // console.log(e.target.value);
-    // setSelectedYear(e.target.value);
+    setSelectedYear(e.target.value);
     setFilterRows([
       ...rows.filter((item) => {
         if (item.academicYearId === e.target.value) {

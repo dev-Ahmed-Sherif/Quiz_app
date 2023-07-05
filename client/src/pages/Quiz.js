@@ -10,9 +10,11 @@ import { Navigate } from "react-router-dom";
 
 export default function Quiz() {
   const [check, setChecked] = useState(undefined);
+  console.log(check);
+  const [error, setError] = useState("");
 
-  const result = useSelector((state) => state.result.result);
-  const { queue, trace } = useSelector((state) => state.questions);
+  const result = useSelector((state) => state.user.result);
+  const { questions, trace } = useSelector((state) => state.quiz);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -25,17 +27,25 @@ export default function Quiz() {
     };
   });
 
+  useEffect(() => {
+    setChecked(result[trace]);
+  }, [trace]);
+
   /** next button event handler */
   function onNext() {
-    if (trace < queue.length) {
+    if (trace < questions.length && check !== undefined) {
       /** increase the trace value by one using MoveNextAction */
       dispatch(MoveNextQuestion());
 
       /** insert a new result in the array.  */
       if (result.length <= trace) {
         /* Access value of selected answer */
+        console.log(check);
         dispatch(PushAnswer(check));
       }
+      setError("");
+    } else {
+      setError("يجب الاجابة على السؤال");
     }
 
     /** reset the value of the checked variable */
@@ -47,6 +57,7 @@ export default function Quiz() {
     if (trace > 0) {
       /** decrease the trace value by one using MovePrevQuestion */
       dispatch(MovePrevQuestion());
+      setError("");
     }
   }
 
@@ -55,7 +66,7 @@ export default function Quiz() {
   }
 
   /** finished exam after the last question */
-  if (result.length && result.length >= queue.length) {
+  if (result.length && result.length >= questions.length) {
     return <Navigate to={"/result"} replace={true}></Navigate>;
   }
 
@@ -68,6 +79,7 @@ export default function Quiz() {
         onPrev={onPrev}
         onNext={onNext}
       />
+      <p> {error} </p>
     </div>
   );
 }

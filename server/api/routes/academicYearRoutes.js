@@ -13,9 +13,9 @@ let options = {
 
 router.get("/", requireAuth, async (req, res) => {
   try {
-    console.log("logedGetYear");
+    // console.log("logedGetYear");
     const year = await academicYear.find({});
-    console.log(year);
+    // console.log(year);
     res.status(200).send({ data: year });
   } catch (error) {}
 });

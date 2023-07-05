@@ -20,19 +20,21 @@ export function flagResult(totalPoints, earnPoints) {
 
 /** check user auth  */
 export function CheckUserExist({ children }) {
-  const auth = useSelector((state) => state.result.userName);
+  const auth = useSelector((state) => state.user.userName);
   return auth ? children : <Navigate to={"/"} replace={true}></Navigate>;
 }
 
 /** get server data */
 export async function getServerData(url, callback) {
-  const data = await (await axios.get(url))?.data;
+  const data = await (await axios.get(url, { withCredentials: true }))?.data;
   // console.log(data);
   return callback ? callback(data) : data;
 }
 
 /** post server data */
 export async function postServerData(url, result, callback) {
-  const data = await (await axios.post(url, result))?.data;
+  const data = await (
+    await axios.post(url, result, { withCredentials: true })
+  )?.data;
   return callback ? callback(data) : data;
 }

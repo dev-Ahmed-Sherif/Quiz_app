@@ -11,29 +11,31 @@ import {
 } from "../helper/helper";
 
 /** import actions  */
-import { resetAllAction } from "../redux/question_reducer";
-import { resetResultAction } from "../redux/result_reducer";
+import { resetAllAction } from "../redux/quiz_reducer";
+import { resetResultAction } from "../redux/user_reducer";
 import { usePublishResult } from "../hooks/setResult";
 
 export default function Result() {
   const dispatch = useDispatch();
   const {
-    questions: { queue, answers },
-    result: { result, userId },
+    quiz: { questions, answers, id },
+    user: { result, userId, userName },
   } = useSelector((state) => state);
 
-  const totalPoints = queue.length * 10;
+  const ques_point = 10;
+  const totalPoints = questions.length * ques_point;
   const attempts = attempts_Number(result);
-  const earnPoints = earnPoints_Number(result, answers, 10);
+  const earnPoints = earnPoints_Number(result, answers, ques_point);
   const flag = flagResult(totalPoints, earnPoints);
 
   /** store user result */
   usePublishResult({
+    quizId: id,
     result,
-    username: userId,
+    user: userId,
     attempts,
     points: earnPoints,
-    achived: flag ? "Passed" : "Failed",
+    achived: flag ? "ناجح" : "راسب",
   });
 
   function onRestart() {
@@ -43,36 +45,36 @@ export default function Result() {
 
   return (
     <div className="container">
-      <h1 className="title text-light">Quiz Application</h1>
+      <h1 className="title text-light">نتيجة الأمتحان</h1>
 
       <div className="result flex-center">
         <div className="flex">
-          <span>Username</span>
-          <span className="bold">{userId || ""}</span>
+          <span>الأسم :</span>
+          <span className="bold">{userName || ""}</span>
         </div>
         <div className="flex">
-          <span>Total Quiz Points : </span>
+          <span> درجة الامتحان الكلية : </span>
           <span className="bold">{totalPoints || 0}</span>
         </div>
         <div className="flex">
-          <span>Total Questions : </span>
-          <span className="bold">{queue.length || 0}</span>
+          <span>عدد الأسئلة المجابة : </span>
+          <span className="bold">{questions.length || 0}</span>
         </div>
-        <div className="flex">
+        {/* <div className="flex">
           <span>Total Attempts : </span>
           <span className="bold">{attempts || 0}</span>
-        </div>
+        </div> */}
         <div className="flex">
-          <span>Total Earn Points : </span>
+          <span>الدرجة النهائية للطالب : </span>
           <span className="bold">{earnPoints || 0}</span>
         </div>
         <div className="flex">
-          <span>Quiz Result</span>
+          <span>نتيجة الاختبار</span>
           <span
             style={{ color: `${flag ? "#2aff95" : "#ff2a66"}` }}
             className="bold"
           >
-            {flag ? "Passed" : "Failed"}
+            {flag ? "ناجح" : "راسب"}
           </span>
         </div>
       </div>

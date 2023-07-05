@@ -12,15 +12,18 @@ const quizSchema = new mongoose.Schema(
       ref: "subjects",
       required: true,
     },
+    month: {
+      type: String,
+      required: true,
+    },
     questionIds: [
       {
         type: mongoose.Types.ObjectId,
         ref: "questions",
       },
     ],
-    type: {
+    quesDeg: {
       type: String,
-      required: true,
     },
     dateUpdated: {
       type: String,

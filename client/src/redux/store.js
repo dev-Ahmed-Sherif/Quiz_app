@@ -1,13 +1,13 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 /** call reducers */
-import questionReducer from "./question_reducer";
-import resultReducer from "./result_reducer";
+import quizReducer from "./quiz_reducer";
+import userReducer from "./user_reducer";
 import linkReducer from "./link_reducer";
 
 const rootReducer = combineReducers({
-  questions: questionReducer,
-  result: resultReducer,
+  quiz: quizReducer,
+  user: userReducer,
   link: linkReducer,
 });
 

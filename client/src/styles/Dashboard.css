@@ -184,7 +184,7 @@
   width: calc(100% - 200px);
   right: 200px;
   min-height: 100vh;
-  background: var(--white);
+  background: var(--light-color);
   transition: 0.5s;
   -webkit-transition: 0.5s;
   -moz-transition: 0.5s;
@@ -284,6 +284,11 @@
   flex-direction: column;
   align-items: center;
   padding: 7rem 2rem 2rem 2rem;
+  overflow: scroll;
+}
+
+.content .head {
+  padding-bottom: 1.7em;
 }
 
 ul {
@@ -417,6 +422,8 @@ h3 span {
 .add-item {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 14px;
   border: 2px solid blue;
   padding: 7px 40px;
   border-radius: 14px;
@@ -424,6 +431,32 @@ h3 span {
   -moz-border-radius: 14px;
   -ms-border-radius: 14px;
   -o-border-radius: 14px;
+}
+
+.add-item .form-group {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 14px;
+}
+
+.form-group-update,
+.first {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-group-update button {
+  width: fit-content;
+  align-self: center;
+  padding: 0 7px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
 }
 
 .add-item p,

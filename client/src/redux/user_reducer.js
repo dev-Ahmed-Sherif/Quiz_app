@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const resultReducer = createSlice({
-  name: "result",
+export const userReducer = createSlice({
+  name: "user",
   initialState: {
     userId: JSON.parse(window.localStorage.getItem("id"))
       ? JSON.parse(window.localStorage.getItem("id"))
@@ -22,6 +22,8 @@ export const resultReducer = createSlice({
       // console.log(state.userName);
     },
     pushResultAction: (state, action) => {
+      // console.log(action.payload);
+      // console.log(state.result);
       state.result.push(action.payload);
     },
     updateResultAction: (state, action) => {
@@ -43,6 +45,6 @@ export const {
   pushResultAction,
   resetResultAction,
   updateResultAction,
-} = resultReducer.actions;
+} = userReducer.actions;
 
-export default resultReducer.reducer;
+export default userReducer.reducer;

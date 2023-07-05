@@ -33,7 +33,7 @@ html {
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   position: relative;
   margin: 40px auto;
@@ -43,9 +43,9 @@ html {
 }
 
 .container .title {
-  font-size: 3em;
+  /* font-size: 3em;
+  border: 5px solid var(--primary-color); */
   text-align: center;
-  border: 5px solid var(--primary-color);
   padding: 0.3em 0.2em;
   border-radius: 4px;
 }
@@ -88,17 +88,17 @@ html {
 
 .container .btn:hover {
   cursor: pointer;
-  background-color: #f0f0f0;
+  background-color: var(--blue);
   color: #202020;
 }
 
 .next {
-  background-color: var(--primary-color);
+  background-color: blue;
   justify-self: flex-end;
 }
 
 .prev {
-  background-color: #faff5a;
+  background-color: blue;
   justify-self: flex-start;
 }
 
@@ -109,7 +109,7 @@ ul li {
   float: left;
   width: 100%;
   height: 100px;
-  border-bottom: 1px solid #333;
+  border: none;
 }
 
 ul li input[type="radio"] {
