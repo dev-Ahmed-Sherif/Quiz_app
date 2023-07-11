@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import parse from "html-react-parser";
 
 /** Custom Hook */
 import { useFetchQestion } from "../hooks/FetchQuestion";
@@ -7,6 +8,8 @@ import { updateResult } from "../hooks/setResult";
 
 export default function Questions({ onChecked, onPrev, onNext }) {
   const [checked, setChecked] = useState(undefined);
+  const [ques, setQues] = useState("");
+  console.log(ques);
   const { trace } = useSelector((state) => {
     console.log(state);
     return state.quiz;
@@ -35,6 +38,10 @@ export default function Questions({ onChecked, onPrev, onNext }) {
     dispatch(updateResult({ trace, checked }));
   }, [checked]);
 
+  useEffect(() => {
+    setQues(question?.question);
+  });
+
   function onSelect(q) {
     onChecked(q);
     setChecked(q);
@@ -52,6 +59,7 @@ export default function Questions({ onChecked, onPrev, onNext }) {
       <h3 className="title text-light">{quiz?.month}</h3>
       {/* ? this for access the value when it not null or undefined */}
 
+      <h3> {parse(ques)} </h3>
       <h3> {question?.question} </h3>
       <ul key={question?._id}>
         {question?.options.map((q, i) => {

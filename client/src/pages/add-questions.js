@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 import { Stack, Typography } from "@mui/material";
 
 import Topbar from "../components/Topbar";
@@ -27,6 +30,8 @@ function AddQuestions() {
   // Questions Details
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState([""]);
+  console.log(question);
+
   const [answer, setAnswer] = useState("");
 
   useEffect(() => {
@@ -169,7 +174,21 @@ function AddQuestions() {
                 value={question}
                 onChange={onChangeQuestion}
               /> */}
-              <textarea
+              <CKEditor
+                editor={ClassicEditor}
+                data={question}
+                // onReady={(editor) => {
+                //   // You can store the "editor" and use when it is needed.
+                //   console.log("Editor is ready to use!", editor);
+                // }}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  // console.log({ event, editor, data });
+                  setQuestion(data);
+                }}
+              />
+
+              {/* <textarea
                 style={{
                   height: "151px",
                   width: "402px",
@@ -180,7 +199,7 @@ function AddQuestions() {
                 placeholder="السوال"
                 value={question}
                 onChange={onChangeQuestion}
-              />
+              /> */}
             </div>
             <div className="form-group-update">
               <div className="first">

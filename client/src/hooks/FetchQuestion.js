@@ -30,14 +30,13 @@ export const useFetchQestion = () => {
           `${process.env.REACT_APP_SERVER_HOSTNAME}/api/quizzes/quiz-details`,
           { id: _id },
           (data) => {
-            // console.log(data);
             return data;
           }
         );
         // console.log(quiz);
         // console.log(quiz.data);
         if (quiz.data) {
-          console.log(quiz);
+          // console.log(quiz);
           setGetData((prev) => ({ ...prev, isLoading: false }));
           setGetData((prev) => ({ ...prev, apiData: quiz.data }));
 

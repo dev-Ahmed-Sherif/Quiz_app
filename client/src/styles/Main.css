@@ -69,4 +69,6 @@
   padding: 1.4rem;
   font-size: x-large;
   color: red;
+  text-wrap: balance;
+  text-align: center;
 }

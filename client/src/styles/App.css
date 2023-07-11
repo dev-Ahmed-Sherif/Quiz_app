@@ -62,7 +62,8 @@ html {
 }
 
 .container .questions {
-  padding: 3em;
+  padding: 1em;
+  width: 940px;
 }
 
 /* 

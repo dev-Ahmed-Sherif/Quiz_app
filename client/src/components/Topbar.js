@@ -15,7 +15,7 @@ function Topbar() {
 
   let menuRef = useRef();
 
-  const name = useSelector((state) => state.result.userName);
+  const name = useSelector((state) => state.user.userName);
 
   useEffect(() => {
     let handler = (e) => {

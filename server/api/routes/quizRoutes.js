@@ -25,7 +25,7 @@ router.get("/", requireAuth, async (req, res) => {
 
 router.post("/quiz-details", requireAuth, async (req, res) => {
   try {
-    // console.log("loged");
+    console.log("quiz details");
     const quiz = await Quiz.findOne({ _id: req.body.id })
       .populate("academicYearId")
       .populate("subjectId")

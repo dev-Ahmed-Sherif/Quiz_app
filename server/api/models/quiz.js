@@ -25,6 +25,9 @@ const quizSchema = new mongoose.Schema(
     quesDeg: {
       type: String,
     },
+    lang: {
+      type: String,
+    },
     dateUpdated: {
       type: String,
     },

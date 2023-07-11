@@ -36,5 +36,6 @@ export async function postServerData(url, result, callback) {
   const data = await (
     await axios.post(url, result, { withCredentials: true })
   )?.data;
+  console.log(data);
   return callback ? callback(data) : data;
 }
