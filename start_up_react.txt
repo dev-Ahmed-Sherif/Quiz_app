@@ -1,0 +1,6 @@
+TIMEOUT 3
+D:
+cd emad\quiz_app\client
+serve -s build
+
+cmd /k
