@@ -18,7 +18,7 @@ import { usePublishResult } from "../hooks/setResult";
 export default function Result() {
   const dispatch = useDispatch();
   const {
-    quiz: { questions, answers, id },
+    quiz: { subject, questions, answers, id },
     user: { result, userId, userName },
   } = useSelector((state) => state);
 
@@ -31,6 +31,7 @@ export default function Result() {
   /** store user result */
   usePublishResult({
     quizId: id,
+    quizSubject: subject,
     result,
     user: userId,
     attempts,

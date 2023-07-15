@@ -121,9 +121,25 @@ router.patch("/update-details", requireAuth, async (req, res) => {
 });
 
 router.post("/update-user-result", requireAuth, async (req, res) => {
-  const user = await User.findOneAndUpdate({ _id: req.body.user }, {});
+  console.log(req.body);
+  const { quizId, quizSubject, points, achived } = req.body;
+  const user = await User.findOneAndUpdate(
+    { _id: req.body.user },
+    {
+      $push: {
+        result: {
+          quizId,
+          quizSubject,
+          points,
+          achived,
+          addDate: new Date().toLocaleDateString("ar-EG", options),
+        },
+      },
+    }
+  );
   if (user) {
     const updatedUser = await User.findOne({ _id: req.body.user });
+    console.log(updatedUser);
   } else {
   }
 });

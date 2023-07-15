@@ -29,10 +29,9 @@ function GetStudent() {
 
   const columns = [
     { field: "_id", headerName: "الرقم", width: 70 },
-    { field: "name", headerName: "الأسم", width: 130 },
-    { field: "password", headerName: "الباسورد", width: 130 },
-    { field: "dateUpdate", headerName: "أخر تعديل", width: 130 },
-    { field: "dateRegister", headerName: "تاريخ التسجيل", width: 200 },
+    { field: "quizSubject", headerName: "أسم المادة", width: 130 },
+    { field: "points", headerName: "الدرجات", width: 130 },
+    { field: "achived", headerName: "حالة الطالب", width: 130 },
   ];
 
   const [values, setValues] = useState({

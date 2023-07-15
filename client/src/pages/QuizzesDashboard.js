@@ -17,6 +17,8 @@ import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
 import SearchItem from "./../components/SearchItem";
 
+import image from "../img/OIP.jpg";
+
 import "../styles/Dashboard.css";
 
 function QuizzesDashboard() {
@@ -93,7 +95,17 @@ function QuizzesDashboard() {
                   alignItems: "center",
                 }}
               >
-                <CardMedia> img </CardMedia>
+                <CardMedia sx={{ paddingTop: "7px" }}>
+                  <img
+                    style={{
+                      width: "7em",
+                      height: "7em",
+                      borderRadius: "50%",
+                    }}
+                    src={image}
+                    alt="exam"
+                  />
+                </CardMedia>
                 <CardContent
                   sx={{
                     display: "flex",

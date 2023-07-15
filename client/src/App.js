@@ -19,6 +19,7 @@ import AddQuestions from "./pages/add-questions";
 import AcademicSubject from "./pages/AcademicSubject";
 import AcademicYear from "./pages/AcademicYear";
 import EditStudent from "./pages/EditStudent";
+import QuizzesStudent from "./pages/QuizzesStudent";
 
 /** react routes */
 const router = createBrowserRouter([
@@ -60,6 +61,7 @@ const router = createBrowserRouter([
   //     </CheckUserExist>
   //   ),
   // },
+
   {
     path: "/quizzes-dashboard",
     element: (
@@ -101,7 +103,15 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/quiz",
+    path: "/quizzes-student",
+    element: (
+      <CheckUserExist>
+        <QuizzesStudent />
+      </CheckUserExist>
+    ),
+  },
+  {
+    path: "/quiz/:_id",
     element: (
       <CheckUserExist>
         <Quiz />

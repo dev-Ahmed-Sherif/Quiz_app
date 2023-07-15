@@ -18,6 +18,14 @@ function AddQuestions() {
 
   const { _id } = useParams();
 
+  const columns = [
+    { field: "_id", headerName: "الرقم", width: 70 },
+    { field: "name", headerName: "الأسم", width: 130 },
+    { field: "password", headerName: "الباسورد", width: 130 },
+    { field: "dateUpdate", headerName: "أخر تعديل", width: 130 },
+    { field: "dateRegister", headerName: "تاريخ التسجيل", width: 200 },
+  ];
+
   // Quiz Details
   const [quiz, setQuiz] = useState({
     academicYear: "",
@@ -33,6 +41,8 @@ function AddQuestions() {
   console.log(question);
 
   const [answer, setAnswer] = useState("");
+
+  const [enteredQues, serEnteredQues] = useState([]);
 
   useEffect(() => {
     getQuizData();
@@ -251,7 +261,7 @@ function AddQuestions() {
               />
             </div>
           </form>
-          {/* <DataTable /> */}
+          <DataTable columns={columns} rows={enteredQues} />
         </div>
       </div>
     </>

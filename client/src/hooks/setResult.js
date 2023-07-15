@@ -18,12 +18,12 @@ export const updateResult = (index) => async (dispatch) => {
 
 /** insert user data */
 export const usePublishResult = (resultData) => {
-  const { result, quizId, points, achived, user } = resultData;
+  const { result, quizId } = resultData;
   (async () => {
     try {
       if (result !== [] && !quizId) throw new Error("Couldn't get Result");
       await postServerData(
-        `${process.env.REACT_APP_SERVER_HOSTNAME}/api/result`,
+        `${process.env.REACT_APP_SERVER_HOSTNAME}/api/users/update-user-result`,
         resultData,
         (data) => data
       );

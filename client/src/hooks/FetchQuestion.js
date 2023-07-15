@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postServerData } from "../helper/helper";
 
@@ -13,6 +14,7 @@ export const useFetchQestion = () => {
     apiData: [],
     serverError: null,
   });
+  const { _id } = useParams();
 
   useEffect(() => {
     setGetData((prev) => ({ ...prev, isLoading: true }));
@@ -25,7 +27,7 @@ export const useFetchQestion = () => {
         //   `${process.env.REACT_APP_SERVER_HOSTNAME}/api/questions`,
         //   (data) => data
         // );
-        const _id = "64902d2722b30937aa347722";
+        // const _id = "64902d2722b30937aa347722";
         const quiz = await postServerData(
           `${process.env.REACT_APP_SERVER_HOSTNAME}/api/quizzes/quiz-details`,
           { id: _id },

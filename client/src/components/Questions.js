@@ -39,7 +39,7 @@ export default function Questions({ onChecked, onPrev, onNext }) {
   }, [checked]);
 
   useEffect(() => {
-    setQues(question?.question);
+    setQues(question !== undefined ? question?.question : "");
   });
 
   function onSelect(q) {
@@ -59,43 +59,51 @@ export default function Questions({ onChecked, onPrev, onNext }) {
       <h3 className="title text-light">{quiz?.month}</h3>
       {/* ? this for access the value when it not null or undefined */}
 
-      <h3> {parse(ques)} </h3>
-      <h3> {question?.question} </h3>
-      <ul key={question?._id}>
-        {question?.options.map((q, i) => {
-          // console.log(i);
-          return (
-            <li key={i}>
-              <input
-                type="radio"
-                value={false}
-                name="options"
-                id={`q${i}-option`}
-                onChange={() => onSelect(q)}
-              />
+      {question !== undefined ? (
+        <>
+          <h3> {parse(ques)} </h3>
+          <h3> {question?.question} </h3>
+          <ul key={question?._id}>
+            {question?.options.map((q, i) => {
+              // console.log(i);
+              return (
+                <li key={i}>
+                  <input
+                    type="radio"
+                    value={false}
+                    name="options"
+                    id={`q${i}-option`}
+                    onChange={() => onSelect(q)}
+                  />
 
-              <label className="text-primary" htmlFor={`q${i}-option`}>
-                {q}
-              </label>
-              <div
-                className={`check ${result[trace] === q ? "checked" : ""}`}
-              ></div>
-            </li>
-          );
-        })}
-      </ul>
-      <div className="grid">
-        {trace > 0 ? (
-          <button className="btn prev" onClick={onPrev}>
-            Prev
-          </button>
-        ) : (
-          <div></div>
-        )}
-        <button className="btn next" onClick={onNext}>
-          Next
-        </button>
-      </div>
+                  <label className="text-primary" htmlFor={`q${i}-option`}>
+                    {q}
+                  </label>
+                  <div
+                    className={`check ${result[trace] === q ? "checked" : ""}`}
+                  ></div>
+                </li>
+              );
+            })}
+          </ul>
+          <div className="grid">
+            {trace > 0 ? (
+              <button className="btn prev" onClick={onPrev}>
+                Prev
+              </button>
+            ) : (
+              <div></div>
+            )}
+            <button className="btn next" onClick={onNext}>
+              Next
+            </button>
+          </div>
+        </>
+      ) : (
+        <div style={{ fontSize: "2em", textAlign: "center", padding: "1em" }}>
+          لاتوجد أسئلة
+        </div>
+      )}
     </div>
   );
 }

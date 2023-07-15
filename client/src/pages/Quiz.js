@@ -14,7 +14,9 @@ export default function Quiz() {
   const [error, setError] = useState("");
 
   const result = useSelector((state) => state.user.result);
+  console.log(result);
   const { questions, trace } = useSelector((state) => state.quiz);
+  console.log(questions);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -66,7 +68,11 @@ export default function Quiz() {
   }
 
   /** finished exam after the last question */
-  if (result.length && result.length >= questions.length) {
+  if (
+    result.length &&
+    result.length >= questions.length &&
+    questions.length !== 0
+  ) {
     return <Navigate to={"/result"} replace={true}></Navigate>;
   }
 

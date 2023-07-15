@@ -16,10 +16,16 @@ export default function Main() {
     window.onunload = function () {
       return null;
     };
+
+    // Remove Local Storge
+    window.localStorage.removeItem("id");
+    window.localStorage.removeItem("Name");
+    window.localStorage.removeItem("academicYear");
+    window.localStorage.removeItem("quizzesResult");
   });
 
   const QUIZ_URI_LOGIN_BACK = "/api/users/login";
-  const QUIZ_URI_HOME = "/quiz";
+  const QUIZ_URI_HOME = "/quizzes-student";
   const DASH_URI_HOME = "/users-dashboard";
 
   // const userNameRef = useRef(null);
@@ -82,8 +88,16 @@ export default function Main() {
         navigate(DASH_URI_HOME);
       } else if (role === "student") {
         dispatch(setUser(res.data.user));
-        window.localStorage.setItem("Name", JSON.stringify(res.data.user.name));
         window.localStorage.setItem("id", JSON.stringify(res.data.user._id));
+        window.localStorage.setItem("Name", JSON.stringify(res.data.user.name));
+        window.localStorage.setItem(
+          "academicYear",
+          JSON.stringify(res.data.user._id)
+        );
+        window.localStorage.setItem(
+          "quizzesResult",
+          JSON.stringify(res.data.user.result)
+        );
         navigate(QUIZ_URI_HOME);
       }
     } catch (error) {}
