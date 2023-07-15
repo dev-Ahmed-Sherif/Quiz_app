@@ -57,6 +57,7 @@ function QuizzesStudent() {
         gap: "14px",
       }}
     >
+      <Typography> الأختبارت المخصصة </Typography>
       {rows.map((row) =>
         row.academicYearId._id === academicYear &&
         quizzesResult.find((ele) => ele.quizId !== row._id) !== undefined ? (

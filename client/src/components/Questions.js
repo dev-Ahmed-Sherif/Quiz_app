@@ -62,7 +62,6 @@ export default function Questions({ onChecked, onPrev, onNext }) {
       {question !== undefined ? (
         <>
           <h3> {parse(ques)} </h3>
-          <h3> {question?.question} </h3>
           <ul key={question?._id}>
             {question?.options.map((q, i) => {
               // console.log(i);
