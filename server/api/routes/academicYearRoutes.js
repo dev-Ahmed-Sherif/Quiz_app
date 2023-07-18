@@ -27,7 +27,7 @@ router.post("/create", requireAuth, (req, res) => {
   });
 
   Year.save().then((data) => {
-    console.log(data);
+    // console.log(data);
     res.status(200).send({ message: "تم إضافة عام دراسى بنجاح", data: data });
   });
 });
@@ -53,7 +53,7 @@ router.delete("/delete", requireAuth, async (req, res) => {
   try {
     const year = await academicYear.deleteOne({ _id: req.body._id });
     if (year) {
-      console.log(year);
+      // console.log(year);
       const years = await academicYear.find({});
       res.status(200).send({ message: "تم الحذف بنجاح", data: years });
     } else {

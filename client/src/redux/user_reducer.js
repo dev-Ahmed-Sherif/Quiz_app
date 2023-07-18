@@ -12,7 +12,9 @@ export const userReducer = createSlice({
     academicYear: JSON.parse(window.localStorage.getItem("academicYear"))
       ? JSON.parse(window.localStorage.getItem("academicYear"))
       : "",
-    result: [],
+    result: JSON.parse(window.localStorage.getItem("result"))
+      ? JSON.parse(window.localStorage.getItem("result"))
+      : [],
     quizzesResult: JSON.parse(window.localStorage.getItem("quizzesResult"))
       ? JSON.parse(window.localStorage.getItem("quizzesResult"))
       : [],
@@ -33,11 +35,13 @@ export const userReducer = createSlice({
       // console.log(action.payload);
       // console.log(state.result);
       state.result.push(action.payload);
+      window.localStorage.setItem("result", JSON.stringify([...state.result]));
     },
     updateResultAction: (state, action) => {
       const { trace, checked } = action.payload;
       /* Update the value of previous question */
       state.result.fill(checked, trace, trace + 1);
+      window.localStorage.setItem("result", JSON.stringify([...state.result]));
     },
     resetResultAction: () => {
       return {

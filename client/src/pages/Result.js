@@ -1,14 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../styles/Result.css";
 import { Link } from "react-router-dom";
 
-import ResultTable from "../components/ResultTable";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  attempts_Number,
-  earnPoints_Number,
-  flagResult,
-} from "../helper/helper";
+import { earnPoints_Number, flagResult } from "../helper/helper";
 
 /** import actions  */
 import { resetAllAction } from "../redux/quiz_reducer";
@@ -24,17 +19,16 @@ export default function Result() {
 
   const ques_point = 10;
   const totalPoints = questions.length * ques_point;
-  const attempts = attempts_Number(result);
   const earnPoints = earnPoints_Number(result, answers, ques_point);
   const flag = flagResult(totalPoints, earnPoints);
 
   /** store user result */
   usePublishResult({
-    quizId: id,
+    _id: id,
     quizSubject: subject,
     result,
     user: userId,
-    attempts,
+    quizTotalPoints: totalPoints,
     points: earnPoints,
     achived: flag ? "ناجح" : "راسب",
   });
@@ -61,10 +55,6 @@ export default function Result() {
           <span>عدد الأسئلة المجابة : </span>
           <span className="bold">{questions.length || 0}</span>
         </div>
-        {/* <div className="flex">
-          <span>Total Attempts : </span>
-          <span className="bold">{attempts || 0}</span>
-        </div> */}
         <div className="flex">
           <span>الدرجة النهائية للطالب : </span>
           <span className="bold">{earnPoints || 0}</span>
@@ -84,11 +74,6 @@ export default function Result() {
         <Link className="btn" to={"/"} onClick={onRestart}>
           الذهاب الى صفحة البداية
         </Link>
-      </div>
-
-      <div className="container">
-        {/* result table */}
-        <ResultTable></ResultTable>
       </div>
     </div>
   );

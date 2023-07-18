@@ -98,6 +98,7 @@ export default function Main() {
           "quizzesResult",
           JSON.stringify(res.data.user.result)
         );
+        window.localStorage.setItem("result", JSON.stringify(["1"]));
         navigate(QUIZ_URI_HOME);
       }
     } catch (error) {}
@@ -127,7 +128,14 @@ export default function Main() {
         <button className="btn">تسجيل الدخول</button>
       </form>
 
-      {errorMsg !== undefined ? <p> {errorMsg} </p> : <p></p>}
+      {errorMsg !== undefined ? (
+        <p style={{ color: "red", fontSize: "2em", fontWeight: "bold" }}>
+          {" "}
+          {errorMsg}{" "}
+        </p>
+      ) : (
+        <p></p>
+      )}
     </div>
   );
 }

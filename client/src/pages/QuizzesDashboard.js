@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 import {
   Box,
   Stack,
@@ -15,7 +16,8 @@ import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import { FaPlus } from "react-icons/fa";
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
-import SearchItem from "./../components/SearchItem";
+
+import "react-toastify/dist/ReactToastify.css";
 
 import image from "../img/OIP.jpg";
 
@@ -23,10 +25,10 @@ import "../styles/Dashboard.css";
 
 function QuizzesDashboard() {
   const GET_URI_BACK = "/api/quizzes";
+  const DELETE_URI_BACK = "/api/quizzes/delete";
 
   const navigate = useNavigate();
 
-  const [search, setSearch] = useState("");
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
@@ -43,6 +45,36 @@ function QuizzesDashboard() {
       setRows([...data.data]);
       // console.log(rows);
     } catch (error) {}
+  };
+
+  const handleDelete = async (id) => {
+    console.log(id);
+    try {
+      const res = await axios.delete(
+        `${process.env.REACT_APP_SERVER_HOSTNAME}${DELETE_URI_BACK}`,
+        {
+          data: { _id: id },
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(res);
+      notfyDelete();
+      setRows([...res.data.data]);
+    } catch (error) {}
+  };
+
+  const notfyDelete = () => {
+    toast.info("👍👍👍 تم حذف الأختبار بنجاح", {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
 
   return (
@@ -80,7 +112,9 @@ function QuizzesDashboard() {
             pt={1.5}
             sx={{
               display: "flex",
+              flexWrap: "wrap",
               flexDirection: "row-reverse",
+              justifyContent: "center",
               alignItems: "flex-start",
               gap: "14px",
             }}
@@ -93,13 +127,14 @@ function QuizzesDashboard() {
                   flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
+                  width: "320px",
                 }}
               >
                 <CardMedia sx={{ paddingTop: "7px" }}>
                   <img
                     style={{
-                      width: "7em",
-                      height: "7em",
+                      width: "3.4em",
+                      height: "3.4em",
                       borderRadius: "50%",
                     }}
                     src={image}
@@ -121,6 +156,9 @@ function QuizzesDashboard() {
                     {row.subjectId.name}
                   </Typography>
                   <Typography fontWeight="bold"> {row.month} </Typography>
+                  <Typography fontWeight="bold" color="blue" fontSize={"large"}>
+                    عدد الأسئلة : {row.questionIds.length}
+                  </Typography>
                   <Typography fontWeight="bold">
                     تاريخ الأنشاء : {row.dateAdded}
                   </Typography>
@@ -141,7 +179,7 @@ function QuizzesDashboard() {
                     إضافة الأسئلة
                   </Button>
                   <Button
-                    onClick={() => {}}
+                    onClick={() => handleDelete(row._id)}
                     variant="contained"
                     sx={{
                       width: 125,
@@ -158,6 +196,18 @@ function QuizzesDashboard() {
           </Stack>
         </Box>
       </div>
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 }

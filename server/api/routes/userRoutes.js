@@ -37,19 +37,19 @@ router.get("/", requireAuth, async (req, res) => {
 });
 
 router.post("/get-user", requireAuth, async (req, res) => {
-  console.log("loged get user");
-  console.log(req.body);
+  // console.log("loged get user");
+  // console.log(req.body);
   try {
     const user = await User.findOne({ _id: req.body.id }).populate(
       "academicYearId"
     );
-    console.log(user);
+    // console.log(user);
     res.status(200).send({ data: user });
   } catch (error) {}
 });
 
 router.post("/login", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const user = await User.findOne({ name: req.body.name });
   if (user) {
     if (req.body.password == user.password) {
@@ -71,6 +71,19 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.post("/logout", (req, res) => {
+  // console.log("logout");
+  res
+    .cookie("authToken", " ", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 1,
+    })
+    .send("done");
+  // res.send("done");
+});
+
 router.post("/create", requireAuth, (req, res) => {
   const user = new User({
     name: req.body.name,
@@ -79,7 +92,7 @@ router.post("/create", requireAuth, (req, res) => {
     dateRegister: new Date().toLocaleDateString("ar-EG", options),
   });
   user.save().then((data) => {
-    console.log(data);
+    // console.log(data);
     res.status(200).send({ message: "تم اضافة مستخدم جديد بنجاح", data: data });
   });
 });
@@ -92,13 +105,13 @@ router.post("/create-test", (req, res) => {
     dateRegister: new Date().toLocaleDateString("ar-EG", options),
   });
   user.save().then((data) => {
-    console.log(data);
+    // console.log(data);
     res.status(200).send({ message: "تم اضافة مستخدم جديد بنجاح", data: data });
   });
 });
 
 router.patch("/update-details", requireAuth, async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const user = await User.findOneAndUpdate(
     { _id: req.body.id },
     {
@@ -113,7 +126,7 @@ router.patch("/update-details", requireAuth, async (req, res) => {
     const updatedUser = await User.findOne({ _id: req.body.id }).populate(
       "academicYearId"
     );
-    console.log(updatedUser);
+    // console.log(updatedUser);
     res.status(200).send({ message: "تم التعديل بنجاح", data: updatedUser });
   } else {
     res.status(200).send({ message: "هذا الشخص لا يوجد له سجل" });
@@ -121,15 +134,16 @@ router.patch("/update-details", requireAuth, async (req, res) => {
 });
 
 router.post("/update-user-result", requireAuth, async (req, res) => {
-  console.log(req.body);
-  const { quizId, quizSubject, points, achived } = req.body;
+  // console.log(req.body);
+  const { _id, quizSubject, quizTotalPoints, points, achived } = req.body;
   const user = await User.findOneAndUpdate(
     { _id: req.body.user },
     {
       $push: {
         result: {
-          quizId,
+          _id,
           quizSubject,
+          quizTotalPoints,
           points,
           achived,
           addDate: new Date().toLocaleDateString("ar-EG", options),
@@ -139,7 +153,7 @@ router.post("/update-user-result", requireAuth, async (req, res) => {
   );
   if (user) {
     const updatedUser = await User.findOne({ _id: req.body.user });
-    console.log(updatedUser);
+    // console.log(updatedUser);
   } else {
   }
 });

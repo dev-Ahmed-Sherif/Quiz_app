@@ -23,8 +23,6 @@ const GET_USERS_URI_BACK = "/api/users";
 
 const GET_ACADYEAR_URI_BACK = "/api/academic-year";
 
-const DASH_URI_HOME = "/users-dashboard";
-
 function Users() {
   const columns = [
     { field: "_id", headerName: "الرقم", width: 70 },
@@ -126,20 +124,7 @@ function Users() {
         `${process.env.REACT_APP_SERVER_HOSTNAME}${GET_USERS_URI_BACK}`,
         { withCredentials: true }
       );
-      // console.log("res data ", data.data);
-      // console.log("selected year in get user ", selectedYear);
 
-      // if (selectedYear !== "-2" && selectedYear !== "-1") {
-      //   console.log("loged");
-      //   const updatedRows = rows.filter((item) => {
-      //     if (item.academicYearId === selectedYear) {
-      //       return item;
-      //     }
-      //   });
-      //   setRows([...updatedRows]);
-      // } else {
-      //   setRows([...data.data]);
-      // }
       setRows([...data.data]);
       setFilterRows([...data.data]);
       // console.log(rows);
@@ -308,7 +293,16 @@ function Users() {
                   <FaPlus />
                 </button>
               </form>
-              {errorMsg !== undefined ? <p> {errorMsg} </p> : <p></p>}
+              {errorMsg !== undefined ? (
+                <p
+                  style={{ color: "red", fontSize: "2em", fontWeight: "bold" }}
+                >
+                  {" "}
+                  {errorMsg}{" "}
+                </p>
+              ) : (
+                <p></p>
+              )}
             </div>
             <div className="search-options">
               <h2> البحث عن الطلاب </h2>

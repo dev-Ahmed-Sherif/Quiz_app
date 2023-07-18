@@ -31,7 +31,13 @@ function GetStudent() {
     { field: "_id", headerName: "الرقم", width: 70 },
     { field: "quizSubject", headerName: "أسم المادة", width: 130 },
     { field: "points", headerName: "الدرجات", width: 130 },
+    {
+      field: "quizTotalPoints",
+      headerName: "الدرجة الكلية للأختبار",
+      width: 130,
+    },
     { field: "achived", headerName: "حالة الطالب", width: 130 },
+    { field: "addDate", headerName: "تاريخ الألتحاق", width: 170 },
   ];
 
   const [values, setValues] = useState({
@@ -219,7 +225,16 @@ function GetStudent() {
               >
                 تعديل البيانات
               </button>
-              {errorMsg !== undefined ? <p> {errorMsg} </p> : <p></p>}
+              {errorMsg !== undefined ? (
+                <p
+                  style={{ color: "red", fontSize: "2em", fontWeight: "bold" }}
+                >
+                  {" "}
+                  {errorMsg}{" "}
+                </p>
+              ) : (
+                <p></p>
+              )}
             </form>
           </div>
 

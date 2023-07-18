@@ -39,7 +39,7 @@ router.post("/create", requireAuth, async (req, res) => {
   });
 
   ques.save().then((data) => {
-    console.log(data);
+    // console.log(data);
   });
 
   const quiz = await Quiz.findOneAndUpdate(
@@ -55,7 +55,7 @@ router.post("/create", requireAuth, async (req, res) => {
       .populate("questionIds")
       .populate("academicYearId")
       .populate("subjectId");
-    console.log(updatedQuiz);
+    // console.log(updatedQuiz);
     res
       .status(200)
       .send({ message: "تم إضافة السؤال بنجاح", data: updatedQuiz });
@@ -66,16 +66,31 @@ router.post("/create", requireAuth, async (req, res) => {
 
 router.patch("/update", requireAuth, (req, res) => {});
 
-router.delete("/delete", requireAuth, (req, res) => {
-  Ques.deleteOne({ _id: req.body._id }, (err, data) => {
-    if (err) {
-      console.log(err);
-      res.send({ message: "لم يتم حذف السؤال" });
+router.delete("/delete", requireAuth, async (req, res) => {
+  try {
+    const ques = await Ques.deleteOne({ _id: req.body.quesId });
+    if (ques) {
+      // console.log(ques);
+      const quiz = await Quiz.findOneAndUpdate(
+        { _id: req.body.quizId },
+        {
+          $pull: {
+            questionIds: ques._id,
+          },
+        }
+      );
+      // console.log(quiz);
+      const quizUpdated = await Quiz.findOne({ _id: req.body.quizId })
+        .populate("academicYearId")
+        .populate("subjectId")
+        .populate("questionIds");
+      res.status(200).send({ message: "تم الحذف بنجاح", data: quizUpdated });
     } else {
-      console.log(data);
-      res.status(200).send({ message: "تم حذف السؤال بنجاح" });
+      res.send({ message: "لم يتم الحذف" });
     }
-  });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 module.exports = router;

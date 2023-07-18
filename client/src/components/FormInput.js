@@ -4,10 +4,6 @@ import "../styles/FormInput.css";
 function FormInput({ className, onChange, errorMsg, id, ...inputProps }) {
   const [focused, setFocused] = useState(false);
 
-  const handleFocus = (e) => {
-    setFocused(true);
-  };
-
   return (
     <>
       <input

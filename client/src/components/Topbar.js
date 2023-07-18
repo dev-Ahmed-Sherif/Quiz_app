@@ -2,12 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Action from "../redux/link_reducer";
+import axios from "axios";
 import ListItem from "./ListItem";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 import imageName from "../img/person.png";
 
 function Topbar() {
+  const LOGOUT_URI_BACK = "/api/users/logout";
+
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -36,24 +39,28 @@ function Topbar() {
     e.preventDefault();
     window.localStorage.setItem("link", JSON.stringify("الطلاب"));
     window.localStorage.removeItem("Name");
+    window.localStorage.removeItem("result");
     dispatch(Action.setLink("الطلاب"));
-    navigate("/");
+    logoutUser();
+  };
+
+  const logoutUser = async () => {
+    console.log("logout");
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_SERVER_HOSTNAME}${LOGOUT_URI_BACK}`
+      );
+
+      console.log(res);
+
+      if (res.status === 200) {
+        navigate("/");
+      }
+    } catch (error) {}
   };
 
   return (
     <div className="topbar">
-      {/* <div className="toggle">
-        <ion-icon name="menu"></ion-icon>
-      </div> */}
-
-      {/* <!-- search  --> */}
-      {/* <div className="search">
-        <label htmlFor="">
-          <input type="text" name="" id="" placeholder="Search here" />
-          <ion-icon name="search"></ion-icon>
-        </label>
-      </div> */}
-
       {/* <!-- UserImg --> */}
       <div className="menu-container" ref={menuRef}>
         <div
@@ -71,7 +78,7 @@ function Topbar() {
             <br />
           </h3>
           <button onClick={(e) => handleLogout(e)}>
-            <h4>logout</h4>
+            <h4>تسجيل الخروج</h4>
             <LogoutIcon />
           </button>
           <ul>

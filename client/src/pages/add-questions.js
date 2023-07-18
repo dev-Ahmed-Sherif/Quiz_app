@@ -1,29 +1,60 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
+import { ToastContainer, toast } from "react-toastify";
 import { Stack, Typography } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 
 import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
 
+import "react-toastify/dist/ReactToastify.css";
 import "../styles/Dashboard.css";
 import DataTable from "../components/DataTable";
+import Modal from "../components/Modal";
+
+import { MoveNextQuestion, MovePrevQuestion } from "../hooks/FetchQuestion";
+import { useSelector, useDispatch } from "react-redux";
+import Questions from "../components/Questions";
 
 function AddQuestions() {
   const GET_QUIZ_URI_BACK = "/api/quizzes/quiz-details";
   const ADD_QUES_URI_BACK = "/api/questions/create";
+  const DELETE_URI_BACK = "/api/questions/delete";
 
   const { _id } = useParams();
 
+  const dispatch = useDispatch();
+
   const columns = [
     { field: "_id", headerName: "الرقم", width: 70 },
-    { field: "name", headerName: "الأسم", width: 130 },
-    { field: "password", headerName: "الباسورد", width: 130 },
-    { field: "dateUpdate", headerName: "أخر تعديل", width: 130 },
-    { field: "dateRegister", headerName: "تاريخ التسجيل", width: 200 },
+    { field: "question", headerName: "السؤال", width: 130 },
+    { field: "answer", headerName: "الأجابة", width: 130 },
+    { field: "dateAdded", headerName: "أخر تعديل", width: 230 },
+    {
+      field: "action",
+      headerName: "",
+      sortable: false,
+      width: 260,
+      renderCell: (params) => {
+        return (
+          <div className="table">
+            {/* <Link to={`/users-dashboard/user-details/${params.row._id}`}>
+              <button className="edit"> تعديل  </button>
+            </Link> */}
+            <button>
+              <DeleteIcon
+                className="delete"
+                onClick={() => handleDelete(params.row._id)}
+              />
+            </button>
+          </div>
+        );
+      },
+    },
   ];
 
   // Quiz Details
@@ -37,16 +68,75 @@ function AddQuestions() {
 
   // Questions Details
   const [question, setQuestion] = useState("");
-  const [options, setOptions] = useState([""]);
+  const [options, setOptions] = useState([]);
   console.log(question);
 
   const [answer, setAnswer] = useState("");
 
-  const [enteredQues, serEnteredQues] = useState([]);
+  const [errorMsg, setError] = useState("");
 
   useEffect(() => {
     getQuizData();
   }, []);
+
+  const handleDelete = async (id) => {
+    // console.log(id);
+    try {
+      const { data } = await axios.delete(
+        `${process.env.REACT_APP_SERVER_HOSTNAME}${DELETE_URI_BACK}`,
+        {
+          data: { quesId: id, quizId: _id },
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      // console.log(res);
+      notfyDelete();
+      setQuiz({
+        academicYear: data.data.academicYearId.name,
+        subject: data.data.subjectId.name,
+        month: data.data.month,
+        questions: [...data.data.questionIds],
+        dateAdded: data.data.dateAdded,
+      });
+    } catch (error) {}
+  };
+
+  const notfyDelete = () => {
+    toast.info("👍👍👍 تم حذف السؤال بنجاح", {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const { questions, trace } = useSelector((state) => state.quiz);
+
+  function onNext() {
+    if (trace < questions.length) {
+      /** increase the trace value by one using MoveNextAction */
+      dispatch(MoveNextQuestion());
+
+      /** insert a new result in the array.  */
+    } else {
+      setError("يجب الاجابة على السؤال");
+    }
+
+    /** reset the value of the checked variable */
+  }
+
+  /** Prev button event handler */
+  function onPrev() {
+    if (trace > 0) {
+      /** decrease the trace value by one using MovePrevQuestion */
+      dispatch(MovePrevQuestion());
+    }
+  }
 
   const getQuizData = async () => {
     // console.log("start get user");
@@ -74,10 +164,6 @@ function AddQuestions() {
     } catch (error) {}
   };
 
-  const onChangeQuestion = (e) => {
-    setQuestion(e.target.value);
-  };
-
   const onChangeOption = (e, index) => {
     const newOptions = [...options];
     newOptions[index] = e.target.value;
@@ -102,46 +188,66 @@ function AddQuestions() {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const quiz = {
-      question,
-      options,
-      answer,
-    };
+    if (question === "" && options.length === 0 && answer === "") {
+      setError("يرجى إدخال بيانات السؤال كاملة");
+    } else {
+      const quiz = {
+        question,
+        options,
+        answer,
+      };
 
-    console.log(quiz);
+      console.log(quiz);
 
-    // TODO: Add API call to insert quiz
-    try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_SERVER_HOSTNAME}${ADD_QUES_URI_BACK}`,
-        {
-          id: _id,
-          question: question,
-          options: options,
-          answer: answer,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
-      console.log(data.data);
+      // TODO: Add API call to insert quiz
+      try {
+        const { data } = await axios.post(
+          `${process.env.REACT_APP_SERVER_HOSTNAME}${ADD_QUES_URI_BACK}`,
+          {
+            id: _id,
+            question: question,
+            options: options,
+            answer: answer,
+          },
+          {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+          }
+        );
+        console.log(data.data);
 
-      setQuiz({
-        academicYear: data.data.academicYearId.name,
-        subject: data.data.subjectId.name,
-        month: data.data.month,
-        questions: [...data.data.questionIds],
-        dateAdded: data.data.dateAdded,
-      });
+        setQuiz({
+          academicYear: data.data.academicYearId.name,
+          subject: data.data.subjectId.name,
+          month: data.data.month,
+          questions: [...data.data.questionIds],
+          dateAdded: data.data.dateAdded,
+        });
 
-      // Reset Values
-      setQuestion("");
-      setOptions([""]);
-      setAnswer("");
+        // Reset Values
+        setQuestion("");
+        setOptions([]);
+        setAnswer("");
+        setError("");
 
-      // console.log(exams);
-    } catch (error) {}
+        notfyAdd();
+
+        // console.log(exams);
+      } catch (error) {}
+    }
+  };
+
+  const notfyAdd = () => {
+    toast.info("👍👍👍 تم إضافة السؤال بنجاح", {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
 
   return (
@@ -172,6 +278,9 @@ function AddQuestions() {
               تاريخ الأنشاء : {quiz.dateAdded}
             </Typography>
           </Stack>
+          <Modal title="الأختبار">
+            <Questions onPrev={onPrev} onNext={onNext} />
+          </Modal>
           <Typography fontWeight="bold" fontSize="2em" color="blue">
             إضافة الأسئلة
           </Typography>
@@ -187,29 +296,12 @@ function AddQuestions() {
               <CKEditor
                 editor={ClassicEditor}
                 data={question}
-                // onReady={(editor) => {
-                //   // You can store the "editor" and use when it is needed.
-                //   console.log("Editor is ready to use!", editor);
-                // }}
                 onChange={(event, editor) => {
                   const data = editor.getData();
                   // console.log({ event, editor, data });
                   setQuestion(data);
                 }}
               />
-
-              {/* <textarea
-                style={{
-                  height: "151px",
-                  width: "402px",
-                  direction: "rtl",
-                  fontSize: "xx-large",
-                }}
-                className="form-control"
-                placeholder="السوال"
-                value={question}
-                onChange={onChangeQuestion}
-              /> */}
             </div>
             <div className="form-group-update">
               <div className="first">
@@ -254,16 +346,31 @@ function AddQuestions() {
               />
             </div>
             <div className="form-group">
-              <input
-                type="submit"
-                value="أضف السؤال"
-                className="btn btn-primary"
-              />
+              <input type="submit" value="أضف السؤال" className="add-ques" />
             </div>
           </form>
-          <DataTable columns={columns} rows={enteredQues} />
+          {errorMsg !== undefined ? (
+            <p style={{ color: "red", fontSize: "2em", fontWeight: "bold" }}>
+              {errorMsg}
+            </p>
+          ) : (
+            <p></p>
+          )}
+          <DataTable columns={columns} rows={quiz.questions} />
         </div>
       </div>
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 }

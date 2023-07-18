@@ -9,28 +9,28 @@ import { updateResult } from "../hooks/setResult";
 export default function Questions({ onChecked, onPrev, onNext }) {
   const [checked, setChecked] = useState(undefined);
   const [ques, setQues] = useState("");
-  console.log(ques);
-  const { trace } = useSelector((state) => {
-    console.log(state);
+  // console.log(ques);
+  const { trace, answers } = useSelector((state) => {
+    // console.log(state);
     return state.quiz;
   });
 
-  console.log(trace);
+  // console.log(trace);
 
   const quiz = useSelector((state) => state.quiz);
 
-  console.log(quiz);
+  // console.log(quiz);
 
   const result = useSelector((state) => state.user.result);
   const [{ isLoading, apiData, serverError }] = useFetchQestion();
 
-  console.log(serverError);
+  // console.log(serverError);
 
   const question = useSelector(
     (state) => state.quiz.questions[state.quiz.trace]
   );
 
-  console.log(question);
+  // console.log("question lenght");
 
   const dispatch = useDispatch();
 
@@ -87,14 +87,14 @@ export default function Questions({ onChecked, onPrev, onNext }) {
           </ul>
           <div className="grid">
             {trace > 0 ? (
-              <button className="btn prev" onClick={onPrev}>
-                Prev
+              <button className="btn prev" onClick={() => onPrev()}>
+                السابق
               </button>
             ) : (
               <div></div>
             )}
-            <button className="btn next" onClick={onNext}>
-              Next
+            <button className="btn next" onClick={() => onNext()}>
+              {trace === answers.length - 1 ? "أنهاء الاختبار" : "التالى"}
             </button>
           </div>
         </>

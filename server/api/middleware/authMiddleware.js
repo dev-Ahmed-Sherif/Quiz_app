@@ -5,14 +5,14 @@ const requireAuth = (req, res, next) => {
   const token = req.cookies.authToken;
   // console.log(req);
   // console.log(req.cookies);
-  console.log(token);
+  // console.log(token);
   if (token) {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decodedToken) => {
       if (err) {
         console.log(err.message);
         res.send({ message: err.message });
       } else {
-        // console.log(decodedToken);
+        console.log(decodedToken);
         // const loginUser = await User.findById(decodedToken.id);
         next();
       }

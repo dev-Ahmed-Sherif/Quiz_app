@@ -81,6 +81,7 @@ html {
 }
 
 .container .btn {
+  color: var(--white);
   padding: 0.2em 1.7em;
   border: none;
   border-radius: 0.1em;
@@ -119,12 +120,13 @@ ul li input[type="radio"] {
 }
 
 ul li label {
+  color: blue;
+  font-weight: bolder;
   display: block;
   position: relative;
-  font-weight: 300;
   font-size: 1.35em;
   padding: 25px 25px 25px 80px;
-  margin: 10px auto;
+  margin: 4px auto;
   height: 30px;
   z-index: 9;
   cursor: pointer;
@@ -160,8 +162,8 @@ ul li .check::before {
   border-radius: 100%;
   height: 15px;
   width: 15px;
-  top: 5px;
-  left: 5px;
+  top: 0px;
+  left: 0px;
   margin: auto;
   transition: background 0.25s linear;
   -webkit-transition: background 0.25s linear;

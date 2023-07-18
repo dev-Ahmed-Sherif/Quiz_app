@@ -363,11 +363,17 @@ a {
 }
 
 .dropdown-menu button {
+  color: var(--blue);
+  background-color: var(--light-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 80px;
+  width: 110px;
   padding: 3px 5px;
+}
+
+.dropdown-menu button:hover {
+  background-color: var(--light-color);
 }
 
 h3 span {
@@ -449,7 +455,8 @@ h3 span {
 .form-group-update button {
   width: fit-content;
   align-self: center;
-  padding: 0 7px;
+  padding: 4px 7px;
+  font-size: large;
 }
 
 .input-group {
@@ -622,4 +629,18 @@ h3 span {
 .css-78c6dr-MuiToolbar-root-MuiTablePagination-toolbar p,
 .css-rtrcn9-MuiTablePagination-root {
   font-size: large !important;
+}
+
+.css-1vbgaf2-MuiButtonBase-root-MuiButton-root:hover {
+  background-color: blue;
+}
+
+.add-ques {
+  padding: 4px 7px;
+  font-size: large;
+  background-color: blue;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }

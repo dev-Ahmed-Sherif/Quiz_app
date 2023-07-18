@@ -187,7 +187,16 @@ const AddQuiz = () => {
               >
                 <FaPlus />
               </button>
-              {errorMsg !== undefined ? <p> {errorMsg} </p> : <p></p>}
+              {errorMsg !== undefined ? (
+                <p
+                  style={{ color: "red", fontSize: "2em", fontWeight: "bold" }}
+                >
+                  {" "}
+                  {errorMsg}{" "}
+                </p>
+              ) : (
+                <p></p>
+              )}
             </form>
           </div>
         </div>

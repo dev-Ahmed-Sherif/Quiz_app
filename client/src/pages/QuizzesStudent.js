@@ -17,6 +17,7 @@ import image from "../img/OIP.jpg";
 
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/Dashboard.css";
+import Topbar from "../components/Topbar";
 
 function QuizzesStudent() {
   const navigate = useNavigate();
@@ -29,6 +30,16 @@ function QuizzesStudent() {
 
   console.log(academicYear);
   console.log(quizzesResult);
+
+  useEffect(() => {
+    function preback() {
+      window.history.forward();
+    }
+    setTimeout(preback(), 0);
+    window.onunload = function () {
+      return null;
+    };
+  });
 
   useEffect(() => {
     getData();
@@ -46,78 +57,98 @@ function QuizzesStudent() {
     } catch (error) {}
   };
 
+  // const startExam = (id) => {
+  //   console.log(id);
+  //   quizzesResult.find((ele) => ele._id === id) === undefined
+  //     ? navigate(`/quiz/${id}`)
+  //     : console.log("الطالب ادى الاختبار");
+  // };
+
   return (
-    <Stack
-      p={2}
-      sx={{
-        display: "flex",
-        flexDirection: "row-reverse",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "14px",
-      }}
-    >
-      <Typography> الأختبارت المخصصة </Typography>
-      {rows.map((row) =>
-        row.academicYearId._id === academicYear &&
-        quizzesResult.find((ele) => ele.quizId !== row._id) !== undefined ? (
-          <Card
-            key={row._id}
-            sx={{
-              width: "14em",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <CardMedia sx={{ paddingTop: "7px" }}>
-              <img
-                style={{
-                  width: "7em",
-                  height: "7em",
-                  borderRadius: "50%",
-                }}
-                src={image}
-                alt="exam"
-              />
-            </CardMedia>
-            <CardContent
+    <>
+      <Topbar />
+      <Typography
+        sx={{
+          padding: "2em",
+          color: "blue",
+          fontWeight: "bold",
+          fontSize: "2.4em",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        الأختبارت المخصصة
+      </Typography>
+      <Stack
+        p={2}
+        sx={{
+          display: "flex",
+          flexDirection: "row-reverse",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "14px",
+        }}
+      >
+        {rows.map((row) =>
+          row.academicYearId._id === academicYear &&
+          quizzesResult.find((ele) => ele._id === row._id) === undefined ? (
+            <Card
+              key={row._id}
               sx={{
+                width: "14em",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              <Typography fontWeight="bold">
-                {row.academicYearId.name}
-              </Typography>
-              <Typography fontWeight="bold">{row.subjectId.name}</Typography>
-              <Typography fontWeight="bold"> {row.month} </Typography>
-            </CardContent>
-            <CardActions>
-              <Button
-                onClick={() => {
-                  navigate(`/quiz/${row._id}`);
-                }}
-                variant="contained"
+              <CardMedia sx={{ paddingTop: "7px" }}>
+                <img
+                  style={{
+                    width: "7em",
+                    height: "7em",
+                    borderRadius: "50%",
+                  }}
+                  src={image}
+                  alt="exam"
+                />
+              </CardMedia>
+              <CardContent
                 sx={{
-                  width: 120,
-                  justifyContent: "space-between",
-                  fontWeight: "bold",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                <AiOutlineArrowRight />
-                إبدا الأمتحان
-              </Button>
-            </CardActions>
-          </Card>
-        ) : (
-          <></>
-        )
-      )}
-    </Stack>
+                <Typography fontWeight="bold">
+                  {row.academicYearId.name}
+                </Typography>
+                <Typography fontWeight="bold">{row.subjectId.name}</Typography>
+                <Typography fontWeight="bold"> {row.month} </Typography>
+              </CardContent>
+              <CardActions>
+                <Button
+                  onClick={() => navigate(`/quiz/${row._id}`)}
+                  variant="contained"
+                  sx={{
+                    width: 120,
+                    justifyContent: "space-between",
+                    fontWeight: "bold",
+                  }}
+                >
+                  <AiOutlineArrowRight />
+                  إبدا الأمتحان
+                </Button>
+              </CardActions>
+            </Card>
+          ) : (
+            <></>
+          )
+        )}
+      </Stack>
+    </>
   );
 }
 

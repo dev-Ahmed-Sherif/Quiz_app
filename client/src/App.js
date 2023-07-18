@@ -1,7 +1,5 @@
 import "./styles/App.css";
 
-import { useEffect } from "react";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { CheckUserExist } from "./helper/helper";
@@ -18,7 +16,6 @@ import AddQuiz from "./pages/Add-quiz";
 import AddQuestions from "./pages/add-questions";
 import AcademicSubject from "./pages/AcademicSubject";
 import AcademicYear from "./pages/AcademicYear";
-import EditStudent from "./pages/EditStudent";
 import QuizzesStudent from "./pages/QuizzesStudent";
 
 /** react routes */
@@ -30,11 +27,9 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      <>
-        {/* <CheckUserExist>
-           <Dashboard />
-        </CheckUserExist> */}
-      </>
+      <CheckUserExist>
+        <Dashboard />
+      </CheckUserExist>
     ),
   },
   {
