@@ -177,7 +177,7 @@ function Users() {
         if (res.data.message) {
           setErrorMsg(res.data.message);
         }
-        if (res.data.data === 200) {
+        if (res.data.data) {
           notfyAdd();
           setValues({ username: "", password: "", year: "-1" });
           setRows((prev) => [...prev, res.data.data]);
