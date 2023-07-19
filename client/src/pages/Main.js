@@ -76,7 +76,9 @@ export default function Main() {
       console.log(res);
 
       // Check res Message
-      setErrorMsg(res.data.message);
+      if (res.data.message) {
+        setErrorMsg(res.data.message);
+      }
 
       // Check User Role
       const role = res.data.user.role;

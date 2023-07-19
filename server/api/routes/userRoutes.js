@@ -84,17 +84,25 @@ router.post("/logout", (req, res) => {
   // res.send("done");
 });
 
-router.post("/create", requireAuth, (req, res) => {
-  const user = new User({
-    name: req.body.name,
-    password: req.body.password,
-    academicYearId: req.body.year,
-    dateRegister: new Date().toLocaleDateString("ar-EG", options),
-  });
-  user.save().then((data) => {
-    // console.log(data);
-    res.status(200).send({ message: "تم اضافة مستخدم جديد بنجاح", data: data });
-  });
+router.post("/create", requireAuth, async (req, res) => {
+  const findUser = await User.findOne({ name: req.body.name });
+
+  if (findUser) {
+    res
+      .status(200)
+      .send({ message: "يوجد مستخدم بهذا الأسم يرجى إدخال اسم أخر" });
+  } else {
+    const user = new User({
+      name: req.body.name,
+      password: req.body.password,
+      academicYearId: req.body.year,
+      dateRegister: new Date().toLocaleDateString("ar-EG", options),
+    });
+    user.save().then((data) => {
+      // console.log(data);
+      res.status(200).send({ data: data });
+    });
+  }
 });
 
 router.post("/create-test", (req, res) => {

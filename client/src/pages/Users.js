@@ -174,7 +174,10 @@ function Users() {
           }
         );
         // console.log(res);
-        if (res.status === 200) {
+        if (res.data.message) {
+          setErrorMsg(res.data.message);
+        }
+        if (res.data.data === 200) {
           notfyAdd();
           setValues({ username: "", password: "", year: "-1" });
           setRows((prev) => [...prev, res.data.data]);
