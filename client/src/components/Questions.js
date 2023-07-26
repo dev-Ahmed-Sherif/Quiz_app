@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import parse from "html-react-parser";
 
@@ -47,16 +48,46 @@ export default function Questions({ onChecked, onPrev, onNext }) {
     setChecked(q);
     dispatch(updateResult({ trace, checked }));
   }
+  const [timer, setTimer] = useState();
+
+  // console.log(timer);
+
+  useEffect(() => {
+    setTimer(quiz.time * 2);
+  }, []);
+
+  useEffect(() => {
+    if (timer > 0) {
+      const interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+
+      return () => clearInterval(interval);
+    } else {
+      console.log("finished");
+    }
+  }, [timer]);
 
   if (isLoading) return <h3 className="text-light">isLoading</h3>;
   if (serverError)
     return <h3 className="text-light">{"لايوجد بيانات لعرضها"}</h3>;
+
+  if (timer === 0) {
+    return <Navigate to={"/result"} replace={true}></Navigate>;
+  }
+
+  const minutes = Math.floor(timer / 60);
+  const seconds = timer % 60;
 
   return (
     <div className="questions">
       <h3 className="title text-light">{quiz.year}</h3>
       <h3 className="title text-light">{quiz.subject}</h3>
       <h3 className="title text-light">{quiz?.month}</h3>
+      <p>
+        {" "}
+        الوقت المتبقى : {`${minutes}:${seconds.toString().padStart(2, "0")}`}
+      </p>
       {/* ? this for access the value when it not null or undefined */}
 
       {question !== undefined ? (

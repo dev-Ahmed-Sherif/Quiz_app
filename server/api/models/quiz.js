@@ -22,6 +22,9 @@ const quizSchema = new mongoose.Schema(
         ref: "questions",
       },
     ],
+    quizTime: {
+      type: String,
+    },
     quesDeg: {
       type: String,
     },

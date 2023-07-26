@@ -159,6 +159,9 @@ function QuizzesDashboard() {
                   <Typography fontWeight="bold" color="blue" fontSize={"large"}>
                     عدد الأسئلة : {row.questionIds.length}
                   </Typography>
+                  <Typography fontWeight="bold" color="blue" fontSize={"large"}>
+                    زمن الأختبار : {`${row.quizTime} دقيقة`}
+                  </Typography>
                   <Typography fontWeight="bold">
                     تاريخ الأنشاء : {row.dateAdded}
                   </Typography>

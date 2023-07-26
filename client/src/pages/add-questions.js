@@ -62,6 +62,7 @@ function AddQuestions() {
     academicYear: "",
     subject: "",
     month: "",
+    time: "",
     questions: [],
     dateAdded: "",
   });
@@ -72,6 +73,8 @@ function AddQuestions() {
   console.log(question);
 
   const [answer, setAnswer] = useState("");
+
+  const [check, setChecked] = useState(undefined);
 
   const [errorMsg, setError] = useState("");
 
@@ -97,6 +100,7 @@ function AddQuestions() {
         subject: data.data.subjectId.name,
         month: data.data.month,
         questions: [...data.data.questionIds],
+        time: data.data.quizTime,
         dateAdded: data.data.dateAdded,
       });
     } catch (error) {}
@@ -117,14 +121,15 @@ function AddQuestions() {
 
   const { questions, trace } = useSelector((state) => state.quiz);
 
+  console.log(questions);
+  console.log(trace);
+
   function onNext() {
-    if (trace < questions.length) {
+    if (trace !== questions.length - 1) {
       /** increase the trace value by one using MoveNextAction */
       dispatch(MoveNextQuestion());
 
       /** insert a new result in the array.  */
-    } else {
-      setError("يجب الاجابة على السؤال");
     }
 
     /** reset the value of the checked variable */
@@ -156,6 +161,7 @@ function AddQuestions() {
         academicYear: data.data.academicYearId.name,
         subject: data.data.subjectId.name,
         month: data.data.month,
+        time: data.data.quizTime,
         questions: [...data.data.questionIds],
         dateAdded: data.data.dateAdded,
       });
@@ -220,6 +226,7 @@ function AddQuestions() {
           academicYear: data.data.academicYearId.name,
           subject: data.data.subjectId.name,
           month: data.data.month,
+          time: data.data.quizTime,
           questions: [...data.data.questionIds],
           dateAdded: data.data.dateAdded,
         });
@@ -250,6 +257,10 @@ function AddQuestions() {
     });
   };
 
+  function onChecked(check) {
+    setChecked(check);
+  }
+
   return (
     <>
       <Sidebar />
@@ -274,12 +285,15 @@ function AddQuestions() {
             <Typography fontWeight="bold">{quiz.academicYear}</Typography>
             <Typography fontWeight="bold">{quiz.subject}</Typography>
             <Typography fontWeight="bold"> {quiz.month} </Typography>
+            <Typography fontWeight="bold" color="blue" fontSize={"large"}>
+              زمن الأختبار : {`${quiz.time} دقيقة`}
+            </Typography>
             <Typography fontWeight="bold">
               تاريخ الأنشاء : {quiz.dateAdded}
             </Typography>
           </Stack>
           <Modal title="الأختبار">
-            <Questions onPrev={onPrev} onNext={onNext} />
+            <Questions onPrev={onPrev} onNext={onNext} onChecked={onChecked} />
           </Modal>
           <Typography fontWeight="bold" fontSize="2em" color="blue">
             إضافة الأسئلة

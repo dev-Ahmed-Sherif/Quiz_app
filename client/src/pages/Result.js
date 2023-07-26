@@ -17,10 +17,16 @@ export default function Result() {
     user: { result, userId, userName },
   } = useSelector((state) => state);
 
+  console.log(answers);
+  console.log(result);
+
   const ques_point = 10;
   const totalPoints = questions.length * ques_point;
   const earnPoints = earnPoints_Number(result, answers, ques_point);
   const flag = flagResult(totalPoints, earnPoints);
+
+  // console.log(flag);
+  // console.log(ques_point);
 
   /** store user result */
   usePublishResult({
@@ -52,7 +58,7 @@ export default function Result() {
           <span className="bold">{totalPoints || 0}</span>
         </div>
         <div className="flex">
-          <span>عدد الأسئلة المجابة : </span>
+          <span>عدد الأسئلة : </span>
           <span className="bold">{questions.length || 0}</span>
         </div>
         <div className="flex">

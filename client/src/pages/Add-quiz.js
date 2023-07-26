@@ -31,12 +31,22 @@ const AddQuiz = () => {
     { id: "12", name: "ديسمبر" },
   ];
 
+  const times = [
+    { id: "-1", name: "أختر زمن الأختبار", value: "0" },
+    { id: "1", name: "ربع ساعة", value: "15" },
+    { id: "2", name: "نصف ساعة", value: "30" },
+    { id: "3", name: "ساعة", value: "60" },
+    { id: "4", name: "ساعة ونص", value: "90" },
+    { id: "5", name: "ساعتان", value: "120" },
+  ];
+
   const navigate = useNavigate();
 
   const [quiz, setQuiz] = useState({
     subject: "",
     year: "",
     month: "",
+    time: "",
   });
 
   const [acadmicYears, setAcadmicYears] = useState([
@@ -98,6 +108,8 @@ const AddQuiz = () => {
       setErrorMsg("يجب اختيار المادة الدراسية");
     } else if (quiz.month === "" || quiz.month === "أختر الشهر") {
       setErrorMsg("يجب اختيار الشهر");
+    } else if (quiz.time === "" || quiz.time === "0") {
+      setErrorMsg("يجب اختيار زمن الأختبار");
     } else {
       try {
         const res = await axios.post(
@@ -106,6 +118,7 @@ const AddQuiz = () => {
             subject: quiz.subject,
             month: quiz.month,
             year: quiz.year,
+            quizTime: quiz.time,
           },
           {
             headers: { "Content-Type": "application/json" },
@@ -176,6 +189,18 @@ const AddQuiz = () => {
               >
                 {months.map((item) => (
                   <option key={item.id} value={item.name}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+              <select
+                title="select-time"
+                name="time"
+                value={quiz.time}
+                onChange={(e) => onChange(e)}
+              >
+                {times.map((item) => (
+                  <option key={item.id} value={item.value}>
                     {item.name}
                   </option>
                 ))}

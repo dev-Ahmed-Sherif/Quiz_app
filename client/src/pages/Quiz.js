@@ -10,7 +10,8 @@ import { Navigate } from "react-router-dom";
 
 export default function Quiz() {
   const [check, setChecked] = useState(undefined);
-  console.log(check);
+  // console.log(check);
+
   const [error, setError] = useState("");
 
   const result = useSelector((state) => state.user.result);
@@ -27,7 +28,37 @@ export default function Quiz() {
     window.onunload = function () {
       return null;
     };
+
+    // window.addEventListener("beforeunload", (event) => {
+    //   console.log(event);
+    //   event.preventDefault();
+    //   event.returnValue = " ";
+    //   return false;
+    // });
   });
+
+  useEffect(() => {
+    // window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("beforeunload", (e) => {
+      e.preventDefault();
+      e.returnValue = "سوف يتم إلغاء الأختبار";
+    });
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  });
+
+  const handleBeforeUnload = (event) => {
+    console.log(event);
+    event.preventDefault();
+    event.returnValue = "سوف يتم إلغاء الأختبار";
+
+    // Set the button labels of the confirmation dialog.
+    // event.dialog.setButtonLabel("Yes", "No");
+
+    // Set the default button of the confirmation dialog.
+    event.dialog.setDefaultButton("No");
+  };
 
   useEffect(() => {
     setChecked(result[trace]);

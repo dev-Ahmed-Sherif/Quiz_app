@@ -42,7 +42,7 @@ router.post("/create", requireAuth, (req, res) => {
     academicYearId: req.body.year,
     month: req.body.month,
     subjectId: req.body.subject,
-    quesDeg: req.body.quesDeg,
+    quizTime: req.body.quizTime,
     dateAdded: new Date().toLocaleDateString("ar-EG", options),
   });
 

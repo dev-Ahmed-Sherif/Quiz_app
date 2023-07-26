@@ -8,6 +8,7 @@ export const quizReducer = createSlice({
     year: "",
     month: "",
     subject: "",
+    time: "",
     questions: [],
     answers: [],
     trace: 0,
@@ -19,6 +20,7 @@ export const quizReducer = createSlice({
       state.year = action.payload.quiz.academicYearId.name;
       state.subject = action.payload.quiz.subjectId.name;
       state.month = action.payload.quiz.month;
+      state.time = action.payload.quiz.quizTime;
       state.questions = action.payload.quiz.questionIds;
       // console.log(state.questions);
       state.answers = [...action.payload.quiz.questionIds.map((t) => t.answer)];

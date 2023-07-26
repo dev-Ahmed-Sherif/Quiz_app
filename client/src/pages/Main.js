@@ -100,7 +100,7 @@ export default function Main() {
           "quizzesResult",
           JSON.stringify(res.data.user.result)
         );
-        window.localStorage.setItem("result", JSON.stringify(["1"]));
+        window.localStorage.setItem("result", JSON.stringify([]));
         navigate(QUIZ_URI_HOME);
       }
     } catch (error) {}

@@ -11,7 +11,13 @@ const quizRouter = require("./api/routes/quizRoutes");
 const subjectRouter = require("./api/routes/subjectRoutes");
 const userRouter = require("./api/routes/userRoutes");
 
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+const corsOptions = require("./api/config/corsOptions");
+const credentials = require("./api/middleware/credentials");
+
+app.use(credentials);
+app.use(cors(corsOptions));
+
+// app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
