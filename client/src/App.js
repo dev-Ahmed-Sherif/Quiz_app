@@ -6,6 +6,7 @@ import { CheckUserExist } from "./helper/helper";
 
 /** import components */
 import Main from "./pages/Main";
+import Login from "./pages/Login";
 import Quiz from "./pages/Quiz";
 import Result from "./pages/Result";
 import Dashboard from "./pages/Dashboard";
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+  },
+  {
+    path: "/login",
+    element: <Login></Login>,
   },
   {
     path: "/dashboard",
@@ -56,7 +61,6 @@ const router = createBrowserRouter([
   //     </CheckUserExist>
   //   ),
   // },
-
   {
     path: "/quizzes-dashboard",
     element: (
