@@ -8,23 +8,27 @@ export const quizReducer = createSlice({
     year: "",
     month: "",
     subject: "",
-    time: "",
+    time: 1,
     questions: [],
     answers: [],
     trace: 0,
   },
   reducers: {
     startExamAction: (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload);
       state.id = action.payload.quiz._id;
       state.year = action.payload.quiz.academicYearId.name;
       state.subject = action.payload.quiz.subjectId.name;
       state.month = action.payload.quiz.month;
-      state.time = action.payload.quiz.quizTime;
-      state.questions = action.payload.quiz.questionIds;
-      // console.log(state.questions);
-      state.answers = [...action.payload.quiz.questionIds.map((t) => t.answer)];
-      // console.log(state.answers);
+      state.time = Number(action.payload.quiz.quizTime);
+      // console.log(state.time);
+      // console.log(typeof state.time);
+      state.questions = action.payload.quiz.questionIds.sort(function (a, b) {
+        return 0.5 - Math.random();
+      });
+      console.log(state.questions);
+      state.answers = [...state.questions.map((t) => t.answer)];
+      console.log(state.answers);
       // return {
       //   ...state,
       //   queue: questions,

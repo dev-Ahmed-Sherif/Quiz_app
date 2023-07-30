@@ -20,7 +20,8 @@ export default function Questions({ onChecked, onPrev, onNext }) {
 
   const quiz = useSelector((state) => state.quiz);
 
-  // console.log(quiz);
+  // console.log(quiz.time);
+  // console.log(typeof quiz.time);
 
   const result = useSelector((state) => state.user.result);
   const [{ isLoading, apiData, serverError }] = useFetchQestion();
@@ -48,13 +49,13 @@ export default function Questions({ onChecked, onPrev, onNext }) {
     setChecked(q);
     dispatch(updateResult({ trace, checked }));
   }
-  const [timer, setTimer] = useState();
+  const [timer, setTimer] = useState(1);
 
   // console.log(timer);
 
   useEffect(() => {
-    setTimer(quiz.time * 2);
-  }, []);
+    setTimer(quiz.time * 60);
+  }, [quiz.time]);
 
   useEffect(() => {
     if (timer > 0) {
@@ -76,8 +77,10 @@ export default function Questions({ onChecked, onPrev, onNext }) {
     return <Navigate to={"/result"} replace={true}></Navigate>;
   }
 
-  const minutes = Math.floor(timer / 60);
-  const seconds = timer % 60;
+  let minutes = Math.floor(timer / 60);
+  // console.log(minutes);
+  let seconds = timer % 60;
+  // console.log(seconds);
 
   return (
     <div className="questions">
@@ -85,7 +88,6 @@ export default function Questions({ onChecked, onPrev, onNext }) {
       <h3 className="title text-light">{quiz.subject}</h3>
       <h3 className="title text-light">{quiz?.month}</h3>
       <p>
-        {" "}
         الوقت المتبقى : {`${minutes}:${seconds.toString().padStart(2, "0")}`}
       </p>
       {/* ? this for access the value when it not null or undefined */}
