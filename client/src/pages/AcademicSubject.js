@@ -51,6 +51,8 @@ function AcademicSubject() {
   const [newItem, setNewItem] = useState("");
   const [rows, setRows] = useState([{ _id: "", name: "" }]);
 
+  const browToken = window.localStorage.getItem("token");
+
   useEffect(() => {
     if (rows.length === 1) {
       getData();
@@ -74,9 +76,15 @@ function AcademicSubject() {
 
   const getData = async () => {
     try {
-      const { data } = await axios.get(
+      const { data } = await axios.post(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${GET_URI_BACK}`,
-        { withCredentials: true }
+        {
+          token: browToken,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
       console.log(data.data);
       setRows([...data.data]);
@@ -90,6 +98,7 @@ function AcademicSubject() {
         `${process.env.REACT_APP_SERVER_HOSTNAME}${ADD_URI_BACK}`,
         {
           name: item,
+          token: browToken,
         },
         {
           headers: { "Content-Type": "application/json" },
@@ -111,7 +120,7 @@ function AcademicSubject() {
       const res = await axios.delete(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${DELETE_URI_BACK}`,
         {
-          data: { _id: id },
+          data: { _id: id, token: browToken },
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }

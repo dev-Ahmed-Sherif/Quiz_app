@@ -78,6 +78,8 @@ function AddQuestions() {
 
   const [errorMsg, setError] = useState("");
 
+  const browToken = window.localStorage.getItem("token");
+
   useEffect(() => {
     getQuizData();
   }, []);
@@ -88,7 +90,7 @@ function AddQuestions() {
       const { data } = await axios.delete(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${DELETE_URI_BACK}`,
         {
-          data: { quesId: id, quizId: _id },
+          data: { quesId: id, quizId: _id, token: browToken },
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
@@ -150,6 +152,7 @@ function AddQuestions() {
         `${process.env.REACT_APP_SERVER_HOSTNAME}${GET_QUIZ_URI_BACK}`,
         {
           id: _id,
+          token: browToken,
         },
         {
           headers: { "Content-Type": "application/json" },
@@ -214,6 +217,7 @@ function AddQuestions() {
             question: question,
             options: options,
             answer: answer,
+            token: browToken,
           },
           {
             headers: { "Content-Type": "application/json" },

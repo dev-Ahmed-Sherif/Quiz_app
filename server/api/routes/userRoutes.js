@@ -27,7 +27,7 @@ let options = {
   minute: "numeric",
 };
 
-router.get("/", requireAuth, async (req, res) => {
+router.post("/", requireAuth, async (req, res) => {
   try {
     // console.log("loged");
     const users = await User.find({ role: { $eq: "student" } });
@@ -163,6 +163,27 @@ router.post("/update-user-result", requireAuth, async (req, res) => {
     const updatedUser = await User.findOne({ _id: req.body.user });
     // console.log(updatedUser);
   } else {
+  }
+});
+
+router.patch("/delete-exam", requireAuth, async (req, res) => {
+  // console.log(req.body);
+  const user = await User.findOneAndUpdate(
+    { _id: req.body.user },
+    {
+      $pull: {
+        result: { _id: { $eq: req.body._id } },
+      },
+    }
+  );
+  if (user) {
+    const updatedUser = await User.findOne({ _id: req.body.user });
+    // console.log(updatedUser);
+    res
+      .status(200)
+      .send({ message: "تم حذف الأختبار بنجاح", data: updatedUser.result });
+  } else {
+    res.status(200).send({ message: "هذا الشخص لا يوجد له سجل" });
   }
 });
 

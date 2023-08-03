@@ -31,15 +31,23 @@ function QuizzesDashboard() {
 
   const [rows, setRows] = useState([]);
 
+  const browToken = window.localStorage.getItem("token");
+
   useEffect(() => {
     getData();
   }, []);
 
   const getData = async () => {
     try {
-      const { data } = await axios.get(
+      const { data } = await axios.post(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${GET_URI_BACK}`,
-        { withCredentials: true }
+        {
+          token: browToken,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
       console.log(data.data);
       setRows([...data.data]);
@@ -53,7 +61,7 @@ function QuizzesDashboard() {
       const res = await axios.delete(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${DELETE_URI_BACK}`,
         {
-          data: { _id: id },
+          data: { _id: id, token: browToken },
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }

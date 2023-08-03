@@ -81,6 +81,8 @@ function Users() {
 
   const [errorMsg, setErrorMsg] = useState(undefined);
 
+  const browToken = window.localStorage.getItem("token");
+
   const inputs = [
     {
       id: "1",
@@ -104,9 +106,15 @@ function Users() {
 
   const getYearsData = async () => {
     try {
-      const { data, status } = await axios.get(
+      const { data, status } = await axios.post(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${GET_ACADYEAR_URI_BACK}`,
-        { withCredentials: true }
+        {
+          token: browToken,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
       // console.log(data.data);
 
@@ -120,9 +128,15 @@ function Users() {
 
   const getUsersData = async () => {
     try {
-      const { data } = await axios.get(
+      const { data } = await axios.post(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${GET_USERS_URI_BACK}`,
-        { withCredentials: true }
+        {
+          token: browToken,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
 
       setRows([...data.data]);
@@ -167,6 +181,7 @@ function Users() {
             name: values.username,
             password: values.password,
             year: values.year,
+            token: browToken,
           },
           {
             headers: { "Content-Type": "application/json" },
@@ -193,7 +208,7 @@ function Users() {
       const res = await axios.delete(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${DELETE_URI_BACK}`,
         {
-          data: { _id: id },
+          data: { _id: id, token: browToken },
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }

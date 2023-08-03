@@ -17,6 +17,8 @@ export default function Result() {
     user: { result, userId, userName },
   } = useSelector((state) => state);
 
+  const browToken = window.localStorage.getItem("token");
+
   console.log(answers);
   console.log(result);
 
@@ -30,6 +32,7 @@ export default function Result() {
 
   /** store user result */
   usePublishResult({
+    token: browToken,
     _id: id,
     quizSubject: subject,
     result,

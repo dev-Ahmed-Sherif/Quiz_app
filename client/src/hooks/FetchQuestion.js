@@ -19,6 +19,8 @@ export const useFetchQestion = () => {
   useEffect(() => {
     setGetData((prev) => ({ ...prev, isLoading: true }));
 
+    const browToken = window.localStorage.getItem("token");
+
     /** async function fetch backend data */
     (async () => {
       try {
@@ -30,7 +32,7 @@ export const useFetchQestion = () => {
         // const _id = "64902d2722b30937aa347722";
         const quiz = await postServerData(
           `${process.env.REACT_APP_SERVER_HOSTNAME}/api/quizzes/quiz-details`,
-          { id: _id },
+          { id: _id, token: browToken },
           (data) => {
             return data;
           }

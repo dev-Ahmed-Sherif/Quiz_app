@@ -40,6 +40,7 @@ function Topbar() {
     window.localStorage.setItem("link", JSON.stringify("الطلاب"));
     window.localStorage.removeItem("Name");
     window.localStorage.removeItem("result");
+    window.localStorage.removeItem("token");
     dispatch(Action.setLink("الطلاب"));
     logoutUser();
   };

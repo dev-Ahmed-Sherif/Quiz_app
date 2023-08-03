@@ -11,7 +11,7 @@ let options = {
   minute: "numeric",
 };
 
-router.get("/", requireAuth, async (req, res) => {
+router.post("/", requireAuth, async (req, res) => {
   try {
     // console.log("logedGetYear");
     const year = await academicYear.find({});

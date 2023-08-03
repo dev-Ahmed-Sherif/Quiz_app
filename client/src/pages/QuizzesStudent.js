@@ -28,8 +28,10 @@ function QuizzesStudent() {
 
   const { academicYear, quizzesResult } = useSelector((state) => state.user);
 
-  console.log(academicYear);
-  console.log(quizzesResult);
+  // console.log(academicYear);
+  // console.log(quizzesResult);
+
+  const browToken = window.localStorage.getItem("token");
 
   useEffect(() => {
     function preback() {
@@ -47,9 +49,15 @@ function QuizzesStudent() {
 
   const getData = async () => {
     try {
-      const { data } = await axios.get(
+      const { data } = await axios.post(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${GET_URI_BACK}`,
-        { withCredentials: true }
+        {
+          token: browToken,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
       console.log(data.data);
       setRows([...data.data]);

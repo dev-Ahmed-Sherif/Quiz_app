@@ -15,8 +15,9 @@ import DataTable from "../components/DataTable";
 import FormInput from "../components/FormInput";
 
 const GET_USER_URI_BACK = "/api/users/get-user";
-const UPDATE_URI_BACK = "/api/users/update-details";
 const GET_ACADYEAR_URI_BACK = "/api/academic-year";
+const UPDATE_URI_BACK = "/api/users/update-details";
+const DELETE_URI_BACK = "/api/users/delete-exam";
 const DASH_URI_HOME = "/users-dashboard";
 
 function GetStudent() {
@@ -38,9 +39,31 @@ function GetStudent() {
     },
     { field: "achived", headerName: "حالة الطالب", width: 130 },
     { field: "addDate", headerName: "تاريخ الألتحاق", width: 170 },
+    {
+      field: "action",
+      headerName: "",
+      sortable: false,
+      width: 160,
+      renderCell: (params) => {
+        return (
+          <>
+            {/* <Link to={"/user-dashboard/" + params.row._id}>
+              <button className="edit"> تعديل </button>
+            </Link> */}
+            <button>
+              <DeleteIcon
+                className="delete"
+                onClick={() => handleDelete(params.row._id)}
+              />
+            </button>
+          </>
+        );
+      },
+    },
   ];
 
   const [values, setValues] = useState({
+    id: "",
     username: "",
     password: "",
     year: { _id: "" },
@@ -53,6 +76,8 @@ function GetStudent() {
   const [exams, setExams] = useState([{ _id: "" }]);
 
   const [errorMsg, setErrorMsg] = useState(undefined);
+
+  const browToken = window.localStorage.getItem("token");
 
   const inputs = [
     {
@@ -82,6 +107,7 @@ function GetStudent() {
         `${process.env.REACT_APP_SERVER_HOSTNAME}${GET_USER_URI_BACK}`,
         {
           id: _id,
+          token: browToken,
         },
         {
           headers: { "Content-Type": "application/json" },
@@ -90,6 +116,7 @@ function GetStudent() {
       );
       console.log(data.data);
       setValues({
+        id: data.data._id,
         username: data.data.name,
         password: data.data.password,
         year: data.data.academicYearId,
@@ -101,9 +128,15 @@ function GetStudent() {
 
   const getYearsData = async () => {
     try {
-      const { data, status } = await axios.get(
+      const { data, status } = await axios.post(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${GET_ACADYEAR_URI_BACK}`,
-        { withCredentials: true }
+        {
+          token: browToken,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
       // console.log(data.data);
 
@@ -112,6 +145,28 @@ function GetStudent() {
       }
       console.log(options);
       // console.log(rows);
+    } catch (error) {}
+  };
+
+  const handleDelete = async (id) => {
+    console.log(id);
+    console.log(browToken);
+    try {
+      const res = await axios.patch(
+        `${process.env.REACT_APP_SERVER_HOSTNAME}${DELETE_URI_BACK}`,
+        {
+          _id: id,
+          user: values.id,
+          token: browToken,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(res);
+      notfyDelete();
+      setExams([...res.data.data]);
     } catch (error) {}
   };
 
@@ -137,6 +192,7 @@ function GetStudent() {
             name: values.username,
             password: values.password,
             year: values.year._id,
+            token: browToken,
           },
           {
             headers: { "Content-Type": "application/json" },
@@ -166,6 +222,19 @@ function GetStudent() {
 
   const notfy = () => {
     toast.info("👍👍👍 تم تعديل البيانات بنجاح", {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const notfyDelete = () => {
+    toast.info("👍👍👍 تم حذف الأختبار بنجاح", {
       position: "top-left",
       autoClose: 5000,
       hideProgressBar: false,

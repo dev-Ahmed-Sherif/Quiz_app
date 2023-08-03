@@ -58,11 +58,19 @@ const AddQuiz = () => {
 
   const [errorMsg, setErrorMsg] = useState(undefined);
 
+  const browToken = window.localStorage.getItem("token");
+
   const getYearsData = async () => {
     try {
-      const { data, status } = await axios.get(
+      const { data, status } = await axios.post(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${GET_ACADYEAR_URI_BACK}`,
-        { withCredentials: true }
+        {
+          token: browToken,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
       // console.log(data.data);
 
@@ -76,9 +84,15 @@ const AddQuiz = () => {
 
   const getSubjectsData = async () => {
     try {
-      const { data } = await axios.get(
+      const { data } = await axios.post(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${GET_SUBJECTS_URI_BACK}`,
-        { withCredentials: true }
+        {
+          token: browToken,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
       console.log(data.data);
       setSubjects((prev) => [...prev, ...data.data]);
@@ -119,6 +133,7 @@ const AddQuiz = () => {
             month: quiz.month,
             year: quiz.year,
             quizTime: quiz.time,
+            token: browToken,
           },
           {
             headers: { "Content-Type": "application/json" },

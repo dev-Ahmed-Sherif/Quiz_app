@@ -80,6 +80,10 @@ export default function Login() {
         setErrorMsg(res.data.message);
       }
 
+      // Set Token In LocalStorage
+
+      window.localStorage.setItem("token", JSON.stringify(res.data.token));
+
       // Check User Role
       const role = res.data.user.role;
       // console.log(role);
